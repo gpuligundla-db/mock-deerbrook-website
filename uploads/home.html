@@ -1,0 +1,961 @@
+<!doctype html>
+<html lang="en" data-mode="editorial">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Deer Brook — Operational transformation for the AI era</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="brand.css" />
+<style>
+  /* ===== Hero ===== */
+  .hero { padding: 96px 0 80px; position: relative; overflow: hidden; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 64px;
+    align-items: end;
+  }
+  @media (max-width: 960px) { .hero-grid { grid-template-columns: 1fr; gap: 40px; } }
+  .hero h1 {
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    max-width: 14ch;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--forest);
+    font-weight: 300;
+  }
+  .hero-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    border-left: 1px solid var(--rule);
+    padding-left: 24px;
+  }
+  .hero-meta p { margin: 0; }
+  .hero-actions { display: flex; gap: 12px; margin-top: 56px; flex-wrap: wrap; }
+
+  .hero-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 80px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .hero-strip > div {
+    padding: 22px 24px;
+    border-right: 1px solid var(--rule);
+  }
+  .hero-strip > div:last-child { border-right: 0; }
+  .hero-strip .k { font-family: var(--font-display); font-size: 32px; letter-spacing: -0.02em; }
+  .hero-strip .v { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+  @media (max-width: 720px) {
+    .hero-strip { grid-template-columns: 1fr 1fr; }
+    .hero-strip > div { border-bottom: 1px solid var(--rule); }
+    .hero-strip > div:nth-child(2n) { border-right: 0; }
+    .hero-strip > div:nth-last-child(-n+2) { border-bottom: 0; }
+  }
+
+  /* ===== Trust strip ===== */
+  .trust { padding: 56px 0; border-bottom: 1px solid var(--rule); }
+  .trust-row {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .trust-logos {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 24px;
+    align-items: center;
+  }
+  .trust-logo {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--muted);
+    letter-spacing: -0.01em;
+    opacity: 0.85;
+  }
+  .trust-logo .sub { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-top: 2px; }
+  @media (max-width: 720px) { .trust-row { grid-template-columns: 1fr; } .trust-logos { grid-template-columns: repeat(3, 1fr); } }
+
+  /* ===== AI narrative ===== */
+  .ai-narrative { background: var(--paper-2); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  [data-mode="bold"] .ai-narrative { background: var(--paper-2); }
+  .ai-narrative h2 { max-width: 18ch; }
+  .ai-pillars {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 64px;
+    border-top: 1px solid var(--rule);
+  }
+  .ai-pillar {
+    padding: 36px 28px 36px 0;
+    border-right: 1px solid var(--rule);
+  }
+  .ai-pillar:nth-child(4n) { border-right: 0; }
+  .ai-pillar:nth-child(n+1) { padding-left: 0; }
+  .ai-pillar:not(:first-child) { padding-left: 28px; }
+  .ai-pillar .num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .ai-pillar h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin-bottom: 12px;
+  }
+  .ai-pillar p { font-size: 15px; color: var(--ink-2); margin: 0; }
+  @media (max-width: 960px) {
+    .ai-pillars { grid-template-columns: 1fr 1fr; }
+    .ai-pillar { border-bottom: 1px solid var(--rule); }
+    .ai-pillar:nth-child(2n) { border-right: 0; }
+  }
+  @media (max-width: 560px) {
+    .ai-pillars { grid-template-columns: 1fr; }
+    .ai-pillar { border-right: 0 !important; padding-left: 0 !important; padding-right: 0; }
+  }
+
+  /* ===== AI ask widget ===== */
+  .ai-ask {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    align-items: start;
+    padding-top: var(--s-9);
+  }
+  @media (max-width: 960px) { .ai-ask { grid-template-columns: 1fr; gap: 36px; } }
+  .ai-ask h3 { font-size: 40px; max-width: 14ch; }
+  .ask-card {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: var(--radius-lg);
+    padding: 0;
+    overflow: hidden;
+  }
+  .ask-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper-2);
+  }
+  .ask-head .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--forest); display: inline-block; margin-right: 8px; }
+  .ask-input {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    padding: 22px 18px;
+    font-family: var(--font-sans);
+    font-size: 17px;
+    color: var(--ink);
+    outline: none;
+    resize: none;
+    min-height: 84px;
+  }
+  .ask-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px 14px;
+    border-top: 1px solid var(--rule);
+  }
+  .ask-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 14px 14px;
+  }
+  .ask-suggestions .chip { cursor: pointer; transition: border-color 0.15s ease, color 0.15s ease; }
+  .ask-suggestions .chip:hover { border-color: var(--ink); color: var(--ink); }
+  .ask-output {
+    padding: 16px 18px;
+    border-top: 1px solid var(--rule);
+    background: var(--paper-2);
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.6;
+    max-height: 240px;
+    overflow: auto;
+    white-space: pre-wrap;
+  }
+  .ask-output:empty { display: none; }
+  .ask-status {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ===== Practice grid ===== */
+  .practices {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+  .practice {
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 32px 28px;
+    background: var(--paper);
+    transition: background 0.18s ease, color 0.18s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 240px;
+  }
+  .practice:hover { background: var(--ink); color: var(--paper); }
+  .practice:hover .practice-meta { color: var(--paper); opacity: 0.8; }
+  .practice:hover .practice-arrow { color: var(--paper); transform: translate(3px, -3px); }
+  .practice .num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+  .practice h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 28px;
+    letter-spacing: -0.015em;
+    margin: 18px 0 10px;
+    line-height: 1.1;
+  }
+  .practice-meta {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    max-width: 30ch;
+    margin: 0;
+  }
+  .practice-arrow {
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    width: 18px; height: 18px;
+    transition: transform 0.2s ease;
+  }
+  .practice-tags {
+    margin-top: auto;
+    padding-top: 18px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  @media (max-width: 1024px) { .practices { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .practices { grid-template-columns: 1fr; } }
+
+  /* ===== Industries ===== */
+  .industries {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 32px;
+  }
+  .industry-list { display: flex; flex-direction: column; }
+  .industry-row {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    gap: 24px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+    cursor: pointer;
+    transition: padding 0.2s ease;
+  }
+  .industry-row:first-child { border-top: 1px solid var(--rule); }
+  .industry-row:hover { padding-left: 12px; }
+  .industry-row .ix-num { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+  .industry-row .ix-name { font-family: var(--font-display); font-size: 32px; letter-spacing: -0.015em; }
+  .industry-row .ix-meta { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  .industries-aside {
+    padding-left: 64px;
+    border-left: 1px solid var(--rule);
+    align-self: start;
+    position: sticky;
+    top: 96px;
+  }
+  .industries-aside h3 { margin-bottom: 16px; }
+  @media (max-width: 960px) {
+    .industries { grid-template-columns: 1fr; }
+    .industries-aside { border-left: 0; padding-left: 0; position: static; margin-top: 40px; }
+    .industry-row .ix-name { font-size: 26px; }
+  }
+
+  /* ===== Tech ecosystem ===== */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-top: 48px;
+  }
+  .tech-cell {
+    background: var(--paper);
+    padding: 22px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 130px;
+  }
+  .tech-cell .t-name { font-family: var(--font-display); font-size: 18px; letter-spacing: -0.01em; }
+  .tech-cell .t-tag { font-family: var(--font-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  @media (max-width: 960px) { .tech-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 480px) { .tech-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ===== Case spotlight ===== */
+  .spotlight {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    align-items: stretch;
+  }
+  @media (max-width: 960px) { .spotlight { grid-template-columns: 1fr; } }
+  .spotlight-text { padding-right: 32px; }
+  .spotlight-quote {
+    font-family: var(--font-display);
+    font-size: 36px;
+    line-height: 1.18;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin: 32px 0;
+    text-wrap: balance;
+  }
+  .spotlight-attr { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .spotlight-image {
+    aspect-ratio: 4/5;
+    min-height: 420px;
+  }
+  .spotlight-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    margin-top: 40px;
+  }
+  .spotlight-stats > div { padding: 22px 0; border-right: 1px solid var(--rule); }
+  .spotlight-stats > div:last-child { border-right: 0; padding-left: 24px; }
+  .spotlight-stats .k { font-family: var(--font-display); font-size: 44px; letter-spacing: -0.02em; line-height: 1; }
+  .spotlight-stats .v { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 8px; }
+
+  /* ===== Insights ===== */
+  .insights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 32px;
+  }
+  .insight {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 18px;
+    border-top: 1px solid var(--ink);
+    transition: opacity 0.2s ease;
+  }
+  .insight .ix-cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .insight h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.18;
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+  .insight p { font-size: 14px; color: var(--ink-2); margin: 0; }
+  .insight .ix-foot { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-top: auto; padding-top: 14px; border-top: 1px dashed var(--rule); }
+  @media (max-width: 800px) { .insights { grid-template-columns: 1fr; } }
+
+  /* ===== Big CTA ===== */
+  .cta-block {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--radius-lg);
+    padding: 80px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 64px;
+    align-items: end;
+    margin-top: 32px;
+  }
+  [data-mode="bold"] .cta-block { background: var(--forest); color: #0E100D; }
+  .cta-block h2 { color: inherit; font-size: clamp(36px, 5vw, 64px); max-width: 14ch; }
+  [data-mode="bold"] .cta-block h2 { color: #0E100D; }
+  .cta-block p { color: inherit; opacity: 0.8; font-size: 17px; max-width: 36ch; }
+  .cta-block .btn-primary { background: var(--paper); color: var(--ink); }
+  .cta-block .btn-primary:hover { background: var(--forest); color: var(--paper); }
+  [data-mode="bold"] .cta-block .btn-primary { background: #0E100D; color: var(--forest); }
+  .cta-block .btn-ghost { color: inherit; border-color: rgba(255,255,255,0.3); }
+  [data-mode="bold"] .cta-block .btn-ghost { color: #0E100D; border-color: rgba(14,16,13,0.3); }
+  @media (max-width: 960px) { .cta-block { grid-template-columns: 1fr; padding: 48px; gap: 32px; } }
+
+  /* ===== Floating mode toggle ===== */
+  .mode-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    padding: 4px;
+    display: inline-flex;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+  .mode-toggle button {
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .mode-toggle button.active { background: var(--ink); color: var(--paper); }
+  [data-mode="bold"] .mode-toggle { background: var(--paper-2); border-color: var(--forest); }
+  [data-mode="bold"] .mode-toggle button.active { background: var(--forest); color: #0E100D; }
+
+  /* ===== Bold mode specific accents ===== */
+  [data-mode="bold"] .hero h1 em { color: var(--forest); font-style: italic; }
+  [data-mode="bold"] .practice:hover { background: var(--forest); color: #0E100D; }
+  [data-mode="bold"] .practice:hover .practice-meta { color: #0E100D; }
+  [data-mode="bold"] .spotlight-quote { color: var(--ink); }
+  [data-mode="bold"] .insight { border-top-color: var(--forest); }
+  [data-mode="bold"] .hero-strip .k,
+  [data-mode="bold"] .industry-row .ix-name,
+  [data-mode="bold"] .spotlight-stats .k { color: var(--ink); }
+
+  /* In bold, hero gets a hairline grid backdrop */
+  [data-mode="bold"] .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--ink) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--ink) 6%, transparent) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse at 70% 30%, black 40%, transparent 80%);
+  }
+</style>
+</head>
+<body data-screen-label="home">
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="mark"></span>Deer Brook</a>
+    <nav class="nav-links">
+      <a href="home.html" class="active">Home</a>
+      <a href="practice.html">Practices</a>
+      <a href="about.html">About</a>
+      <a href="strategy.html">Strategy brief</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <a href="contact.html" class="btn btn-primary">
+      Start a conversation
+      <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">Modern technology consulting · est. 2014</span>
+        <h1 style="margin-top: 24px;">Operational transformation <em>for the AI era.</em></h1>
+      </div>
+      <div class="hero-meta">
+        <p class="lead">Deer Brook helps leaders modernize finance, security, data, higher education, and business operations — through systems that are AI-native by design, not retrofitted.</p>
+        <div class="hero-actions">
+          <a href="practice.html" class="btn btn-primary">
+            Explore practices
+            <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#ai-ask" class="btn btn-ghost">Ask our AI</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-strip">
+      <div>
+        <div class="k">11<span style="color: var(--muted)">yrs</span></div>
+        <div class="v">in market</div>
+      </div>
+      <div>
+        <div class="k">7</div>
+        <div class="v">practice areas</div>
+      </div>
+      <div>
+        <div class="k">180+</div>
+        <div class="v">engagements delivered</div>
+      </div>
+      <div>
+        <div class="k">$2.4B</div>
+        <div class="v">client revenue under stewardship</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust">
+  <div class="container">
+    <div class="trust-row">
+      <div class="eyebrow">Partners & platforms</div>
+      <div class="trust-logos">
+        <div class="trust-logo">Microsoft<span class="sub">Solutions Partner</span></div>
+        <div class="trust-logo">CrowdStrike<span class="sub">Elevate Partner</span></div>
+        <div class="trust-logo">Tenable<span class="sub">Authorized</span></div>
+        <div class="trust-logo">Anthology<span class="sub">Implementation</span></div>
+        <div class="trust-logo">AWS<span class="sub">Select Partner</span></div>
+        <div class="trust-logo">Anthropic<span class="sub">Solution Builder</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI NARRATIVE -->
+<section class="ai-narrative">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">The Deer Brook approach</span>
+        <h2 style="margin-top: 20px;">AI is not a service line. It's how we build everything.</h2>
+      </div>
+      <div>
+        <p class="lead">We don't bolt AI onto last-decade systems. We design operations, security, and data platforms so that intelligence is native — embedded into the workflows, controls, and decisions that already run your business.</p>
+      </div>
+    </div>
+
+    <div class="ai-pillars">
+      <div class="ai-pillar">
+        <div class="num">01 — Operating philosophy</div>
+        <h4>AI sits above every practice.</h4>
+        <p>Each capability — ERP, security, analytics, higher ed — is delivered with AI-enabled design patterns, not as an afterthought.</p>
+      </div>
+      <div class="ai-pillar">
+        <div class="num">02 — Practitioner-led</div>
+        <h4>Senior operators, not slideware.</h4>
+        <p>Our consultants are practitioners who've run finance, IT, and security functions. We ship working systems, not decks.</p>
+      </div>
+      <div class="ai-pillar">
+        <div class="num">03 — Vendor-agnostic</div>
+        <h4>Right tool, not house tool.</h4>
+        <p>Microsoft, AWS, CrowdStrike, Tenable, Anthology, Anthropic — we choose what fits, then make it work together.</p>
+      </div>
+      <div class="ai-pillar">
+        <div class="num">04 — Built for complexity</div>
+        <h4>Regulated, audited, accountable.</h4>
+        <p>Designed for higher ed, government, nonprofit, and mid-market environments where compliance is non-negotiable.</p>
+      </div>
+    </div>
+
+    <!-- AI ASK widget -->
+    <div class="ai-ask" id="ai-ask">
+      <div>
+        <span class="eyebrow">Ask Deer Brook</span>
+        <h3 style="margin-top: 20px;">Describe a problem. We'll show you where we'd start.</h3>
+        <p class="lead muted" style="margin-top: 16px;">Type what you're working on — modernizing an ERP, tightening endpoint security, building an AI policy, integrating a student data warehouse. Our system will map your situation to practices and a first conversation.</p>
+      </div>
+      <div class="ask-card">
+        <div class="ask-head">
+          <div style="display:flex; align-items:center;">
+            <span class="dot"></span>
+            <span class="ask-status">deer-brook · routing assistant</span>
+          </div>
+          <span class="mono">v0.3 · beta</span>
+        </div>
+        <textarea class="ask-input" id="askInput" placeholder="e.g. We're a 4,000-employee university with five disconnected student systems and no AI policy. Where would we start?"></textarea>
+        <div class="ask-suggestions">
+          <span class="chip" data-prompt="We need to modernize a 12-year-old Dynamics GP install — what's the path forward?">Modernize Dynamics GP</span>
+          <span class="chip" data-prompt="How do we operationalize AI across finance and HR without a 2-year roadmap?">AI in finance + HR</span>
+          <span class="chip" data-prompt="We're a higher-ed institution looking to consolidate student data and meet GLBA. Where do you start?">Higher-ed data + GLBA</span>
+          <span class="chip" data-prompt="Build an AI usage policy for a mid-market manufacturer.">AI usage policy</span>
+        </div>
+        <div class="ask-actions">
+          <span class="ask-status" id="askStatus">Press ⌘+Enter or click route →</span>
+          <button class="btn btn-primary" id="askBtn">
+            Route
+            <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="ask-output" id="askOutput"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRACTICES -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Capabilities</span>
+        <h2 style="margin-top: 20px;">Seven practice areas. One operating philosophy.</h2>
+      </div>
+      <div>
+        <p class="lead">Each practice is led by a senior operator. Each is delivered with AI-native design patterns. None of them work in isolation — that's the point.</p>
+      </div>
+    </div>
+
+    <div class="practices">
+      <a href="practice.html" class="practice">
+        <span class="num">01</span>
+        <svg class="practice-arrow" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M6 4h8v8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4>AI &amp; Automation</h4>
+        <p class="practice-meta">AI strategy, agentic workflows, model selection, governance, and the messy work of integrating intelligence into real operations.</p>
+        <div class="practice-tags">Agents · Governance · Workflow</div>
+      </a>
+      <a href="practice.html" class="practice">
+        <span class="num">02</span>
+        <svg class="practice-arrow" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M6 4h8v8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4>ERP &amp; Business Applications</h4>
+        <p class="practice-meta">Modern finance and operations platforms — implementation, modernization, integration, and what to do with what you already have.</p>
+        <div class="practice-tags">D365 · NetSuite · Workday</div>
+      </a>
+      <a href="practice.html" class="practice">
+        <span class="num">03</span>
+        <svg class="practice-arrow" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M6 4h8v8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4>Microsoft Dynamics</h4>
+        <p class="practice-meta">Dedicated D365 Finance &amp; Operations, Business Central, GP migration, and Power Platform delivery from a certified Microsoft Solutions Partner.</p>
+        <div class="practice-tags">D365 F&amp;O · BC · Power</div>
+      </a>
+      <a href="practice.html" class="practice">
+        <span class="num">04</span>
+        <svg class="practice-arrow" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M6 4h8v8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4>Cybersecurity</h4>
+        <p class="practice-meta">CrowdStrike, Tenable, Microsoft Defender deployments. Maturity assessments, IR readiness, identity hardening, and AI-assisted SOC operations.</p>
+        <div class="practice-tags">EDR · VM · Identity</div>
+      </a>
+      <a href="practice.html" class="practice">
+        <span class="num">05</span>
+        <svg class="practice-arrow" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M6 4h8v8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4>Higher Education Technology</h4>
+        <p class="practice-meta">Anthology and SIS implementations, student data platforms, AI policy, and the operational realities of running tech in higher ed.</p>
+        <div class="practice-tags">SIS · LMS · Student data</div>
+      </a>
+      <a href="practice.html" class="practice">
+        <span class="num">06</span>
+        <svg class="practice-arrow" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M6 4h8v8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4>Data &amp; Analytics</h4>
+        <p class="practice-meta">Modern data platforms — Fabric, Snowflake, Databricks. Semantic layers, governed AI access, and reports executives actually open.</p>
+        <div class="practice-tags">Fabric · Snowflake · Semantic</div>
+      </a>
+      <a href="practice.html" class="practice">
+        <span class="num">07</span>
+        <svg class="practice-arrow" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M6 4h8v8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4>Cloud &amp; Infrastructure</h4>
+        <p class="practice-meta">Azure and AWS landing zones, FinOps, identity, and the platform engineering work that lets everything else run reliably.</p>
+        <div class="practice-tags">Azure · AWS · Landing zones</div>
+      </a>
+      <a href="practice.html" class="practice">
+        <span class="num">08</span>
+        <svg class="practice-arrow" viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M6 4h8v8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h4>Advisory Services</h4>
+        <p class="practice-meta">vCIO, IT due diligence, technology roadmaps, AI readiness assessments, and second-opinion engagements for leadership teams.</p>
+        <div class="practice-tags">vCIO · Diligence · Roadmaps</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section style="background: var(--paper-2); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+  <div class="container">
+    <div class="industries">
+      <div class="industry-list">
+        <div class="industry-row">
+          <span class="ix-num">01</span>
+          <span class="ix-name">Higher Education</span>
+          <span class="ix-meta">28 institutions</span>
+        </div>
+        <div class="industry-row">
+          <span class="ix-num">02</span>
+          <span class="ix-name">Mid-market Commercial</span>
+          <span class="ix-meta">60+ orgs</span>
+        </div>
+        <div class="industry-row">
+          <span class="ix-num">03</span>
+          <span class="ix-name">Nonprofit &amp; Foundations</span>
+          <span class="ix-meta">22 orgs</span>
+        </div>
+        <div class="industry-row">
+          <span class="ix-num">04</span>
+          <span class="ix-name">State &amp; Local Government</span>
+          <span class="ix-meta">11 agencies</span>
+        </div>
+        <div class="industry-row">
+          <span class="ix-num">05</span>
+          <span class="ix-name">Healthcare &amp; Life Sciences</span>
+          <span class="ix-meta">9 systems</span>
+        </div>
+        <div class="industry-row">
+          <span class="ix-num">06</span>
+          <span class="ix-name">Manufacturing &amp; Distribution</span>
+          <span class="ix-meta">14 orgs</span>
+        </div>
+      </div>
+      <div class="industries-aside">
+        <span class="eyebrow">Industries we serve</span>
+        <h3 style="margin-top: 16px;">We work where complexity is the constant.</h3>
+        <p class="lead muted" style="margin-top: 16px;">Regulated, audited, federated, multi-stakeholder environments. Where shipping the wrong system costs more than shipping no system at all.</p>
+        <a href="about.html" class="btn btn-link" style="margin-top: 24px;">How we work →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH ECOSYSTEM -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Technology ecosystem</span>
+        <h2 style="margin-top: 20px;">Tools we know, deep.</h2>
+      </div>
+      <div>
+        <p class="lead">We hold certifications and partner status across the platforms most of our clients run. We also deploy what we don't sell.</p>
+      </div>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-cell"><div class="t-name">Microsoft 365</div><div class="t-tag">Solutions Partner</div></div>
+      <div class="tech-cell"><div class="t-name">Dynamics 365</div><div class="t-tag">F&amp;O · BC · CE</div></div>
+      <div class="tech-cell"><div class="t-name">Power Platform</div><div class="t-tag">Apps · Automate</div></div>
+      <div class="tech-cell"><div class="t-name">Azure</div><div class="t-tag">Landing zones</div></div>
+      <div class="tech-cell"><div class="t-name">AWS</div><div class="t-tag">Select partner</div></div>
+      <div class="tech-cell"><div class="t-name">Anthropic</div><div class="t-tag">Solution builder</div></div>
+      <div class="tech-cell"><div class="t-name">CrowdStrike</div><div class="t-tag">Elevate partner</div></div>
+      <div class="tech-cell"><div class="t-name">Tenable</div><div class="t-tag">Authorized</div></div>
+      <div class="tech-cell"><div class="t-name">Microsoft Defender</div><div class="t-tag">XDR · Identity</div></div>
+      <div class="tech-cell"><div class="t-name">Anthology</div><div class="t-tag">Implementation</div></div>
+      <div class="tech-cell"><div class="t-name">Snowflake</div><div class="t-tag">SELECT partner</div></div>
+      <div class="tech-cell"><div class="t-name">Databricks</div><div class="t-tag">Registered</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SPOTLIGHT -->
+<section style="border-top: 1px solid var(--rule);">
+  <div class="container">
+    <div class="spotlight">
+      <div class="spotlight-text">
+        <span class="eyebrow">Client spotlight · higher education</span>
+        <p class="spotlight-quote">"Deer Brook didn't sell us an AI strategy. They embedded into our finance and student systems for a year and rebuilt how the institution makes decisions."</p>
+        <p class="spotlight-attr">— CIO, Mid-Atlantic University System (14,000 students)</p>
+        <div class="spotlight-stats">
+          <div><div class="k">62%</div><div class="v">faster month-end close</div></div>
+          <div><div class="k">$3.1M</div><div class="v">annual operating savings</div></div>
+        </div>
+        <a href="practice.html" class="btn btn-link" style="margin-top: 32px;">Read the engagement →</a>
+      </div>
+      <div class="placeholder-img spotlight-image">[ photo · operations team in working session ]</div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section style="border-top: 1px solid var(--rule);">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Insights · field notes</span>
+        <h2 style="margin-top: 20px;">What we're learning, in public.</h2>
+      </div>
+      <div>
+        <p class="lead">We publish field notes from engagements — practical, technical, and free of vendor spin. Subscribe to The Brook for weekly briefings.</p>
+        <a href="#" class="btn btn-link" style="margin-top: 16px;">Subscribe to The Brook →</a>
+      </div>
+    </div>
+
+    <div class="insights">
+      <article class="insight">
+        <span class="ix-cat">AI Governance</span>
+        <h4>The AI policy template most mid-market firms actually need (in 9 pages).</h4>
+        <p>What we ship to clients in week one. Drafted for CFOs and CIOs, not lawyers.</p>
+        <div class="ix-foot"><span>Field note 014</span><span>8 min read</span></div>
+      </article>
+      <article class="insight">
+        <span class="ix-cat">ERP Modernization</span>
+        <h4>Dynamics GP to Business Central: a working playbook from 14 migrations.</h4>
+        <p>Where the pattern holds, where it breaks, and what a believable timeline looks like.</p>
+        <div class="ix-foot"><span>Field note 013</span><span>12 min read</span></div>
+      </article>
+      <article class="insight">
+        <span class="ix-cat">Higher Education</span>
+        <h4>Why student data warehouses fail — and the architecture that doesn't.</h4>
+        <p>The five integration patterns we've shipped across higher-ed clients.</p>
+        <div class="ix-foot"><span>Field note 012</span><span>10 min read</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="border-top: 1px solid var(--rule);">
+  <div class="container">
+    <div class="cta-block">
+      <div>
+        <span class="eyebrow" style="color: inherit; opacity: 0.7;">Start a conversation</span>
+        <h2 style="margin-top: 20px;">Bring us a real problem.</h2>
+      </div>
+      <div>
+        <p>No discovery decks, no boilerplate questionnaires. A senior practitioner reads what you send, replies within two business days, and tells you whether this is a fit.</p>
+        <div style="display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap;">
+          <a href="contact.html" class="btn btn-primary">Email a partner</a>
+          <a href="contact.html" class="btn btn-ghost">Schedule a 30-min</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="brand"><span class="mark"></span>Deer Brook</a>
+        <p class="muted" style="font-size: 14px; max-width: 32ch; margin-top: 14px;">Modern technology consulting helping organizations modernize operations through AI-enabled transformation.</p>
+        <p class="mono" style="margin-top: 18px;">deer-brook.com · est. 2014</p>
+      </div>
+      <div>
+        <h6>Practices</h6>
+        <ul>
+          <li><a href="practice.html">AI &amp; Automation</a></li>
+          <li><a href="practice.html">ERP &amp; Business Applications</a></li>
+          <li><a href="practice.html">Microsoft Dynamics</a></li>
+          <li><a href="practice.html">Cybersecurity</a></li>
+          <li><a href="practice.html">Higher Ed Technology</a></li>
+          <li><a href="practice.html">Data &amp; Analytics</a></li>
+          <li><a href="practice.html">Cloud &amp; Infrastructure</a></li>
+          <li><a href="practice.html">Advisory Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h6>Company</h6>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="about.html">Leadership</a></li>
+          <li><a href="about.html">Careers</a></li>
+          <li><a href="strategy.html">Brand &amp; strategy</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h6>Insights</h6>
+        <ul>
+          <li><a href="#">The Brook (weekly)</a></li>
+          <li><a href="#">Field notes</a></li>
+          <li><a href="#">AI governance lab</a></li>
+          <li><a href="#">Higher-ed bulletin</a></li>
+          <li><a href="#">Engineering writes</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <span>© 2026 Deer Brook Consulting LLC · All rights reserved</span>
+      <span>Privacy · Terms · Accessibility</span>
+    </div>
+  </div>
+</footer>
+
+<!-- MODE TOGGLE -->
+<div class="mode-toggle" role="group" aria-label="Visual direction">
+  <button id="modeEditorial" class="active">Editorial</button>
+  <button id="modeBold">Bold</button>
+</div>
+
+<script src="brand.js"></script>
+<script>
+  // Mode toggle (persists in localStorage)
+  const root = document.documentElement;
+  const editBtn = document.getElementById('modeEditorial');
+  const boldBtn = document.getElementById('modeBold');
+  function applyMode(m) {
+    root.setAttribute('data-mode', m);
+    editBtn.classList.toggle('active', m === 'editorial');
+    boldBtn.classList.toggle('active', m === 'bold');
+    localStorage.setItem('db-mode', m);
+  }
+  editBtn.addEventListener('click', () => applyMode('editorial'));
+  boldBtn.addEventListener('click', () => applyMode('bold'));
+  applyMode(localStorage.getItem('db-mode') || 'editorial');
+
+  // Reveals
+  document.querySelectorAll('section, .practice, .insight, .tech-cell').forEach(el => el.classList.add('reveal'));
+
+  // Suggestion chips
+  document.querySelectorAll('.ask-suggestions .chip').forEach((c) => {
+    c.addEventListener('click', () => {
+      document.getElementById('askInput').value = c.dataset.prompt;
+      document.getElementById('askInput').focus();
+    });
+  });
+
+  // Ask widget
+  const input = document.getElementById('askInput');
+  const btn = document.getElementById('askBtn');
+  const out = document.getElementById('askOutput');
+  const status = document.getElementById('askStatus');
+
+  async function ask() {
+    const text = (input.value || '').trim();
+    if (!text) { input.focus(); return; }
+    btn.disabled = true;
+    status.textContent = 'Routing · analyzing problem...';
+    out.textContent = '';
+    try {
+      const sys = `You are Deer Brook's routing assistant. Deer Brook is a modern technology consulting firm with these practices: AI & Automation, ERP & Business Applications, Microsoft Dynamics, Cybersecurity, Higher Education Technology, Data & Analytics, Cloud & Infrastructure, Advisory Services. Given a client problem, respond in 4 short sections, plainspoken, max 160 words total:
+1) WHAT WE HEARD: one crisp sentence.
+2) PRIMARY PRACTICE: one practice from the list, with a one-line why.
+3) SUPPORTING PRACTICES: 1–2 more, comma-separated, with reasons.
+4) FIRST CONVERSATION: 2-3 questions a Deer Brook partner would ask in the first 20 minutes. Use clear paragraph breaks. No emojis. No marketing language.`;
+      const reply = await window.claude.complete({
+        messages: [
+          { role: 'user', content: sys + '\n\n---\n\nClient problem:\n' + text }
+        ]
+      });
+      out.textContent = reply;
+      status.textContent = 'Routed · scroll for response';
+    } catch (e) {
+      out.textContent = 'Routing offline. A partner will reply directly — send this to hello@deer-brook.com.';
+      status.textContent = 'offline';
+    } finally {
+      btn.disabled = false;
+    }
+  }
+  btn.addEventListener('click', ask);
+  input.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') ask();
+  });
+</script>
+</body>
+</html>

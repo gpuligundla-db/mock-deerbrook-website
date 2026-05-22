@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="en" data-mode="editorial">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Deer Brook — Brand &amp; site redesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="brand.css" />
+<style>
+  body { background: var(--paper); }
+
+  .hub-hero {
+    padding: 96px 0 64px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .hub-hero h1 {
+    font-size: clamp(48px, 6.8vw, 104px);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    max-width: 16ch;
+  }
+  .hub-hero h1 em { color: var(--forest); font-style: italic; font-weight: 300; }
+  .hub-hero .lead { font-size: 22px; max-width: 60ch; margin-top: 32px; }
+  .hub-hero-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+  }
+  @media (max-width: 800px) { .hub-hero-meta { grid-template-columns: 1fr 1fr; gap: 18px; } }
+  .hub-hero-meta .label { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .hub-hero-meta .v { font-family: var(--font-display); font-size: 20px; letter-spacing: -0.01em; }
+
+  /* Section heads */
+  .hub-section {
+    padding: 96px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .hub-section h2 { font-size: clamp(36px, 4.6vw, 64px); max-width: 18ch; }
+
+  /* Direction comparison */
+  .directions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 40px;
+  }
+  @media (max-width: 900px) { .directions { grid-template-columns: 1fr; } }
+  .direction {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    transition: border-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .direction:hover { border-color: var(--ink); }
+
+  .dir-preview {
+    aspect-ratio: 16/10;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    overflow: hidden;
+  }
+  /* Editorial preview */
+  .dir-editorial .dir-preview {
+    background: var(--paper);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .dir-editorial .preview-h1 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.6vw, 48px);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    max-width: 14ch;
+  }
+  .dir-editorial .preview-h1 em { color: var(--forest); font-style: italic; font-weight: 300; }
+  .dir-editorial .preview-meta { font-family: var(--font-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; }
+  .dir-editorial .preview-mid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+  .dir-editorial .preview-mid .k { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.01em; }
+  .dir-editorial .preview-mid .v { font-family: var(--font-mono); font-size: 9px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; }
+
+  /* Bold preview */
+  .dir-bold .dir-preview {
+    background: #0E100D;
+    color: #EDE9DD;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+  .dir-bold .dir-preview::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(237,233,221,0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(237,233,221,0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+  .dir-bold .preview-h1 {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(28px, 4vw, 52px);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: #EDE9DD;
+    max-width: 12ch;
+    position: relative;
+  }
+  .dir-bold .preview-h1 .accent { color: #C5F26A; }
+  .dir-bold .preview-meta { font-family: var(--font-mono); font-size: 10px; color: #8A8779; letter-spacing: 0.1em; text-transform: uppercase; display: flex; justify-content: space-between; position: relative; }
+  .dir-bold .preview-meta span:first-child::before { content: ""; display: inline-block; width: 6px; height: 6px; background: #C5F26A; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+
+  .dir-body { padding: 28px 32px; }
+  .dir-body h3 { font-family: var(--font-display); font-weight: 400; font-size: 28px; letter-spacing: -0.015em; margin: 0 0 8px; }
+  .dir-body .sub { font-family: var(--font-mono); font-size: 11px; color: var(--forest); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+  .dir-body p { font-size: 15px; color: var(--ink-2); margin: 0 0 18px; }
+  .dir-body .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .dir-body .chip { padding: 4px 10px; border: 1px solid var(--rule); border-radius: 999px; font-family: var(--font-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.04em; }
+  .dir-body .actions { display: flex; gap: 12px; }
+
+  /* Page index */
+  .page-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-top: 40px;
+  }
+  @media (max-width: 900px) { .page-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .page-grid { grid-template-columns: 1fr; } }
+  .page-card {
+    background: var(--paper);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 220px;
+    transition: background 0.18s ease;
+    position: relative;
+  }
+  .page-card:hover { background: var(--paper-2); }
+  .page-card .n { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }
+  .page-card h3 { font-family: var(--font-display); font-weight: 400; font-size: 28px; letter-spacing: -0.015em; line-height: 1.1; margin: 0; }
+  .page-card p { font-size: 13px; color: var(--ink-2); margin: 0; }
+  .page-card .arr { margin-top: auto; padding-top: 12px; font-family: var(--font-mono); font-size: 11px; color: var(--ink); letter-spacing: 0.06em; display: flex; align-items: center; gap: 6px; }
+  .page-card:hover .arr svg { transform: translate(3px, -3px); }
+  .page-card .arr svg { transition: transform 0.2s ease; }
+
+  /* Summary brief */
+  .brief-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    margin-top: 40px;
+  }
+  @media (max-width: 800px) { .brief-grid { grid-template-columns: 1fr; gap: 32px; } }
+  .brief-grid h3 { font-family: var(--font-display); font-weight: 400; font-size: 24px; letter-spacing: -0.01em; margin-bottom: 10px; }
+  .brief-grid p { font-size: 16px; color: var(--ink-2); line-height: 1.55; }
+
+  .checks { list-style: none; padding: 0; margin: 0; }
+  .checks li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--ink);
+    align-items: baseline;
+  }
+  .checks li::before {
+    content: "✓";
+    font-family: var(--font-mono);
+    color: var(--forest);
+    font-size: 14px;
+  }
+
+  /* Toggle for embedded comparison */
+  .compare-frame-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 40px;
+  }
+  @media (max-width: 900px) { .compare-frame-row { grid-template-columns: 1fr; } }
+  .frame-wrap {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .frame-head {
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--paper-2);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .frame-head .dots { display: inline-flex; gap: 6px; }
+  .frame-head .dots span { width: 9px; height: 9px; border-radius: 50%; background: var(--rule); display: inline-block; }
+  .frame-head a { color: var(--ink); }
+  .frame-wrap iframe {
+    width: 100%;
+    height: 540px;
+    border: 0;
+    display: block;
+    background: var(--paper);
+  }
+  .frame-bold .frame-head { background: #161915; color: #8A8779; }
+  .frame-bold .frame-head a { color: #EDE9DD; }
+</style>
+</head>
+<body data-screen-label="navigator">
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand" aria-label="Deer Brook — home"></a>
+    <nav class="nav-links">
+      <a href="index.html" class="active">Overview</a>
+      <a href="home.html">Homepage</a>
+      <a href="practice.html">Practice</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="strategy.html">Strategy brief</a>
+    </nav>
+    <a href="home.html" class="btn btn-primary">
+      Open the prototype
+      <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hub-hero">
+  <div class="container">
+    <span class="eyebrow">Project navigator · brand &amp; site redesign · v1.0</span>
+    <h1 style="margin-top: 28px;">A repositioning, in prototype, <em>not in slides.</em></h1>
+    <p class="lead">Two homepage directions. Three inner pages built in the primary direction. A 9-section strategy brief — all linked from here. Every page is interactive, real-content, and toggleable between visual directions to compare on the fly.</p>
+    <div class="hub-hero-meta">
+      <div><div class="label">Client</div><div class="v">Deer Brook Consulting</div></div>
+      <div><div class="label">Scope</div><div class="v">Brand + 5 pages + brief</div></div>
+      <div><div class="label">Positioning</div><div class="v">Operational transformation for the AI era</div></div>
+      <div><div class="label">Status</div><div class="v">Working prototype · v1</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIRECTIONS -->
+<section class="hub-section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Two homepage directions</span>
+        <h2 style="margin-top: 20px;">Same positioning. Different volume.</h2>
+      </div>
+      <div>
+        <p class="lead">Both directions ship the same content architecture and conversion strategy. The difference is volume, posture, and how confident the brand wants to look on day one. Click either to open it full-bleed — both pages cross-link so you can A/B in real time.</p>
+      </div>
+    </div>
+
+    <div class="directions">
+      <!-- Editorial -->
+      <a href="home.html" class="direction dir-editorial">
+        <div class="dir-preview">
+          <div class="preview-meta"><span>Direction A</span><span>EDITORIAL</span></div>
+          <div class="preview-h1">Operational transformation <em>for the AI era.</em></div>
+          <div class="preview-mid">
+            <div><div class="k">11<span style="color: var(--muted);">yrs</span></div><div class="v">in market</div></div>
+            <div><div class="k">7</div><div class="v">practice areas</div></div>
+            <div><div class="k">180+</div><div class="v">engagements</div></div>
+          </div>
+        </div>
+        <div class="dir-body">
+          <div class="sub">Recommended · executive-ready</div>
+          <h3>Editorial.</h3>
+          <p>Warm paper. Source Serif 4 display. Restrained green. Reads like a serious publication, not a marketing site. The default direction for the rebuild.</p>
+          <div class="chips">
+            <span class="chip">Source Serif 4</span>
+            <span class="chip">Geist</span>
+            <span class="chip">Warm paper</span>
+            <span class="chip">Forest accent</span>
+          </div>
+          <div class="actions">
+            <span class="btn btn-link">Open homepage →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Bold -->
+      <a href="home-bold.html" class="direction dir-bold">
+        <div class="dir-preview">
+          <div class="preview-meta"><span>Direction B</span><span>BOLD</span></div>
+          <div class="preview-h1">Modernize operations. <span class="accent">AI-native</span> by design.</div>
+          <div class="preview-meta" style="border-top: 1px solid rgba(237,233,221,0.1); padding-top: 16px;"><span>11 ENGAGEMENTS IN FLIGHT</span><span>EST. 2014</span></div>
+        </div>
+        <div class="dir-body">
+          <div class="sub">Alt · campaign-ready</div>
+          <h3>Bold.</h3>
+          <p>Warm black ground. Geist display. Electric lime. System bar, marquee, engagement feed. Reads like a working tool — useful for event takeovers, AI microsite campaigns, and a more confident brand voice.</p>
+          <div class="chips">
+            <span class="chip">Geist 500</span>
+            <span class="chip">Geist Mono</span>
+            <span class="chip">Warm black</span>
+            <span class="chip">Electric lime</span>
+          </div>
+          <div class="actions">
+            <span class="btn btn-link">Open homepage →</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Live mini-frames -->
+    <div class="compare-frame-row" id="frames">
+      <div class="frame-wrap">
+        <div class="frame-head">
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <span class="dots"><span></span><span></span><span></span></span>
+            <span>direction a · editorial</span>
+          </div>
+          <a href="home.html">open full →</a>
+        </div>
+        <iframe src="home.html" loading="lazy" title="Editorial direction"></iframe>
+      </div>
+      <div class="frame-wrap frame-bold">
+        <div class="frame-head">
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <span class="dots"><span></span><span></span><span></span></span>
+            <span>direction b · bold</span>
+          </div>
+          <a href="home-bold.html">open full →</a>
+        </div>
+        <iframe src="home-bold.html" loading="lazy" title="Bold direction"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S IN THE PROTOTYPE -->
+<section class="hub-section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">What's in the prototype</span>
+        <h2 style="margin-top: 20px;">Five pages, one brief.</h2>
+      </div>
+      <div>
+        <p class="lead">All pages share the same brand system (brand.css) and are interactive. The mode toggle in the bottom-right of each page flips between Editorial and Bold without a reload.</p>
+      </div>
+    </div>
+
+    <div class="page-grid">
+      <a href="home.html" class="page-card">
+        <span class="n">01 · Homepage</span>
+        <h3>Editorial home</h3>
+        <p>Hero, real-client trust strip (NEA, Evergreen CU, Anthology, Microsoft, Ellucian, HigherEdBPO), AI ethos, interactive routing assistant, three behaviors, 4-practice grid, the Deer Brook Difference, technology grid, two client spotlights, real podcast/blog cards, CTA.</p>
+        <span class="arr">Open → <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M4 3h5v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+      <a href="home-bold.html" class="page-card">
+        <span class="n">02 · Homepage alt</span>
+        <h3>Bold home</h3>
+        <p>System status bar, large typographic hero, practice marquee, four-claim ethos, engagement feed, dark technology grid. Distinct composition, not a recolor.</p>
+        <span class="arr">Open → <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M4 3h5v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+      <a href="practice.html" class="page-card">
+        <span class="n">03 · Practice</span>
+        <h3>AI &amp; Automation</h3>
+        <p>Practice page template — left sticky nav, three engagement offers, 4-step process, 14-week case study, stack columns, expandable FAQ, related practices.</p>
+        <span class="arr">Open → <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M4 3h5v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+      <a href="about.html" class="page-card">
+        <span class="n">04 · About</span>
+        <h3>About + people</h3>
+        <p>Editorial hero ("we've been where you are"), three behaviors as operating spine, The Deer Brook Difference, six-card leadership grid (placeholders pending real bios), three commitments, careers + press.</p>
+        <span class="arr">Open → <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M4 3h5v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+      <a href="contact.html" class="page-card">
+        <span class="n">05 · Contact</span>
+        <h3>Send a paragraph</h3>
+        <p>Editorial form with role + size + practice tagging chips. Validates client-side. Routes to partner. Two-day reply commitment surfaced inline.</p>
+        <span class="arr">Open → <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M4 3h5v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+      <a href="strategy.html" class="page-card">
+        <span class="n">06 · Brief</span>
+        <h3>Strategy brief</h3>
+        <p>Nine-section briefing document — assessment, positioning, architecture, homepage strategy, practice positioning, SEO/GEO, visual direction, technical build, roadmap.</p>
+        <span class="arr">Open → <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 9L9 3M4 3h5v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SUMMARY -->
+<section class="hub-section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Positioning summary</span>
+        <h2 style="margin-top: 20px;">What's actually new.</h2>
+      </div>
+      <div>
+        <p class="lead">The full argument is in the Strategy brief. The short version is below.</p>
+      </div>
+    </div>
+
+    <div class="brief-grid">
+      <div>
+        <h3>From "Microsoft shop with extras" to "AI-forward operations firm."</h3>
+        <p>Deer Brook today reads as a Dynamics-and-cyber partner. The market opportunity is to be read as a modern technology consulting firm where Dynamics is one of four practices — and where AI is the operating philosophy that connects them.</p>
+        <h3 style="margin-top: 32px;">The new tagline.</h3>
+        <p style="font-family: var(--font-display); font-size: 26px; letter-spacing: -0.01em; line-height: 1.25; color: var(--ink);">Operational transformation <em style="color: var(--forest);">for the AI era.</em></p>
+      </div>
+      <div>
+        <h3>The shape of what changes.</h3>
+        <ul class="checks">
+          <li>Four practices, one operating philosophy — clear front door for Higher Ed, Dynamics, Cyber Advisory, Technical.</li>
+          <li>AI as a horizontal that runs through every practice, not a separate service line.</li>
+          <li>An editorial visual language — restrained, executive, operator-grade.</li>
+          <li>A canonical CTA ("Send us a paragraph") with a partner two-day reply SLA.</li>
+          <li>A weekly publication (The Brook) and open playbooks for GEO authority.</li>
+          <li>Microsoft Dynamics keeps a dedicated landing page + SEO target — but inside the broader story.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO REVIEW -->
+<section class="hub-section" style="border-bottom: 0;">
+  <div class="container">
+    <div class="section-head" style="margin-bottom: 32px;">
+      <div>
+        <span class="eyebrow">How to review</span>
+        <h2 style="margin-top: 20px;">Suggested order for the first walkthrough.</h2>
+      </div>
+      <div>
+        <p class="lead muted">The prototype is designed to be skimmed in fifteen minutes. Here's the path.</p>
+      </div>
+    </div>
+
+    <ol style="list-style: none; padding: 0; margin: 0; max-width: 720px;">
+      <li style="padding: 24px 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 60px 1fr; gap: 20px; align-items: baseline;">
+        <span class="mono" style="color: var(--forest); font-size: 13px;">STEP 01</span>
+        <div>
+          <h4 style="font-family: var(--font-display); font-weight: 400; font-size: 22px; margin: 0 0 6px;"><a href="home.html" style="border-bottom: 1px solid currentColor;">Open the editorial homepage</a> — read the hero, AI ethos, and practice grid.</h4>
+          <p style="margin: 0; color: var(--ink-2); font-size: 14px;">Try the routing assistant: type "We're a 4,000-person manufacturer modernizing our ERP." See the live response.</p>
+        </div>
+      </li>
+      <li style="padding: 24px 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 60px 1fr; gap: 20px; align-items: baseline;">
+        <span class="mono" style="color: var(--forest); font-size: 13px;">STEP 02</span>
+        <div>
+          <h4 style="font-family: var(--font-display); font-weight: 400; font-size: 22px; margin: 0 0 6px;">Toggle Bold (bottom-right of the page).</h4>
+          <p style="margin: 0; color: var(--ink-2); font-size: 14px;">Feel the volume change. Decide which direction you want to live with.</p>
+        </div>
+      </li>
+      <li style="padding: 24px 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 60px 1fr; gap: 20px; align-items: baseline;">
+        <span class="mono" style="color: var(--forest); font-size: 13px;">STEP 03</span>
+        <div>
+          <h4 style="font-family: var(--font-display); font-weight: 400; font-size: 22px; margin: 0 0 6px;"><a href="practice.html" style="border-bottom: 1px solid currentColor;">Open a practice page</a> — the template every practice will use.</h4>
+          <p style="margin: 0; color: var(--ink-2); font-size: 14px;">Open the FAQ. This is the GEO surface area.</p>
+        </div>
+      </li>
+      <li style="padding: 24px 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 60px 1fr; gap: 20px; align-items: baseline;">
+        <span class="mono" style="color: var(--forest); font-size: 13px;">STEP 04</span>
+        <div>
+          <h4 style="font-family: var(--font-display); font-weight: 400; font-size: 22px; margin: 0 0 6px;"><a href="strategy.html" style="border-bottom: 1px solid currentColor;">Read the strategy brief</a> — nine sections, 15 minutes.</h4>
+          <p style="margin: 0; color: var(--ink-2); font-size: 14px;">The argument for the architecture, the SEO/GEO play, and the rollout plan.</p>
+        </div>
+      </li>
+      <li style="padding: 24px 0; display: grid; grid-template-columns: 60px 1fr; gap: 20px; align-items: baseline;">
+        <span class="mono" style="color: var(--forest); font-size: 13px;">STEP 05</span>
+        <div>
+          <h4 style="font-family: var(--font-display); font-weight: 400; font-size: 22px; margin: 0 0 6px;">Mark up the parts you'd cut and the parts you'd push further.</h4>
+          <p style="margin: 0; color: var(--ink-2); font-size: 14px;">Comments route into the prototype directly. Iteration belongs alongside the partners, not in a deck.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-meta">
+      <div class="footer-brand">
+        <a href="index.html" class="brand" aria-label="Deer Brook — home"></a>
+        <p class="muted" style="font-size: 14px; max-width: 32ch; margin-top: 14px;">Modern technology consulting helping organizations modernize operations through AI-enabled transformation.</p>
+        <p class="mono" style="margin-top: 18px;">Project · brand + site redesign v1.0</p>
+      </div>
+      <div class="footer-actions">
+        <h6>Prototype</h6>
+        <ul>
+          <li><a href="home.html">Homepage (editorial)</a></li>
+          <li><a href="home-bold.html">Homepage (bold)</a></li>
+          <li><a href="practice.html">Practice page</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="strategy.html">Strategy brief</a></li>
+        </ul>
+      </div>
+      <div class="footer-newsletter" id="brook-signup">
+        <span class="eyebrow">Weekly · The Brook</span>
+        <h5>Field notes for CIOs &amp; CFOs.</h5>
+        <p>Practical, technical, vendor-free. One short briefing on what we're learning across engagements — sent Sundays.</p>
+        <form onsubmit="event.preventDefault(); this.closest('.footer-newsletter').classList.add('subscribed'); this.querySelector('button').textContent='Subscribed ✓';">
+          <input type="email" required placeholder="you@company.com" aria-label="Email address" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="meta">One email a week · unsubscribe in one click</div>
+      </div>
+    </div>
+
+    <div class="footer-services six" style="grid-template-columns: repeat(5, 1fr);">
+      <div class="footer-svc">
+        <h6>Brief</h6>
+        <ul>
+          <li><a href="strategy.html#s1">Brand assessment</a></li>
+          <li><a href="strategy.html#s2">New positioning</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6>Architecture</h6>
+        <ul>
+          <li><a href="strategy.html#s3">Site architecture</a></li>
+          <li><a href="strategy.html#s4">Homepage strategy</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6>Practice</h6>
+        <ul>
+          <li><a href="strategy.html#s5">Practice positioning</a></li>
+          <li><a href="strategy.html#s6">SEO + GEO</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6>Visual + tech</h6>
+        <ul>
+          <li><a href="strategy.html#s7">Visual + UX</a></li>
+          <li><a href="strategy.html#s8">Technical build</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6>Roadmap</h6>
+        <ul>
+          <li><a href="strategy.html#s9">Roadmap</a></li>
+          <li><a href="home.html">Open the prototype →</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <span>© 2026 Deer Brook Consulting LLC · All rights reserved</span>
+      <span>Prototype · not a production page</span>
+    </div>
+  </div>
+</footer>
+
+<script src="brand.js"></script>
+</body>
+</html>

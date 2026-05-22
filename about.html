@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en" data-mode="editorial">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>About — Deer Brook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="brand.css" />
+<style>
+  /* Editorial about hero */
+  .about-hero { padding: 96px 0 72px; }
+  .about-hero h1 {
+    font-size: clamp(48px, 6.5vw, 96px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    max-width: 18ch;
+  }
+  .about-hero h1 em { color: var(--forest); font-style: italic; font-weight: 300; }
+  .about-hero .lead { font-size: 22px; max-width: 56ch; margin-top: 36px; }
+
+  /* Manifesto */
+  .manifesto {
+    background: var(--paper-2);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .manifesto-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 64px;
+    align-items: start;
+  }
+  @media (max-width: 800px) { .manifesto-grid { grid-template-columns: 1fr; gap: 24px; } }
+  .manifesto-body p {
+    font-family: var(--font-display);
+    font-size: 28px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    max-width: 32ch;
+    margin: 0 0 28px;
+    text-wrap: pretty;
+  }
+  .manifesto-body p em { color: var(--forest); font-style: italic; }
+  /* Three behaviors variant */
+  .manifesto-body p:not(.behavior-line) {
+    font-size: clamp(40px, 5vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    max-width: none;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+  }
+  .manifesto-body .behavior-tag {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--forest);
+    letter-spacing: 0.12em;
+    font-weight: 400;
+  }
+  .manifesto-body p.behavior-line {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    letter-spacing: 0;
+    max-width: 56ch;
+    margin: 0 0 48px;
+    padding-left: 36px;
+    border-left: 1px solid var(--rule);
+  }
+  .manifesto-body p.behavior-line:last-child { margin-bottom: 0; }
+
+  /* Principles */
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+  .principle {
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 40px;
+  }
+  .principle .n { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
+  .principle h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 32px;
+    letter-spacing: -0.015em;
+    margin: 20px 0 14px;
+    line-height: 1.1;
+  }
+  .principle p { color: var(--ink-2); font-size: 16px; max-width: 48ch; margin: 0; }
+  @media (max-width: 720px) { .principles { grid-template-columns: 1fr; } }
+
+  /* Leadership */
+  .leaders {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-top: 56px;
+  }
+  @media (max-width: 1000px) { .leaders { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .leaders { grid-template-columns: 1fr; } }
+  .leader {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .leader .portrait {
+    aspect-ratio: 4/5;
+    background:
+      repeating-linear-gradient(135deg, var(--paper-2) 0, var(--paper-2) 1px, var(--paper-3) 1px, var(--paper-3) 16px);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: end;
+    padding: 14px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .leader h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 24px;
+    letter-spacing: -0.01em;
+    margin: 8px 0 0;
+  }
+  .leader .role { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .leader .bio { font-size: 14px; color: var(--ink-2); margin: 0; }
+
+  /* Timeline */
+  .timeline {
+    border-top: 1px solid var(--ink);
+    margin-top: 32px;
+  }
+  .tl-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 1.4fr;
+    gap: 48px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  @media (max-width: 800px) { .tl-row { grid-template-columns: 80px 1fr; } .tl-row .tl-body { grid-column: 1 / -1; padding-left: 80px; } }
+  .tl-year { font-family: var(--font-mono); font-size: 13px; color: var(--forest); letter-spacing: 0.08em; }
+  .tl-title { font-family: var(--font-display); font-size: 26px; letter-spacing: -0.01em; line-height: 1.15; }
+  .tl-body { font-size: 15px; color: var(--ink-2); max-width: 56ch; }
+
+  /* Stats */
+  .by-numbers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin: 48px 0;
+  }
+  .by-numbers > div { padding: 36px 24px; border-right: 1px solid var(--rule); }
+  .by-numbers > div:last-child { border-right: 0; }
+  .by-numbers .k { font-family: var(--font-display); font-size: 56px; letter-spacing: -0.025em; line-height: 1; }
+  .by-numbers .v { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 10px; }
+  @media (max-width: 800px) { .by-numbers { grid-template-columns: 1fr 1fr; } .by-numbers > div:nth-child(2n) { border-right: 0; } .by-numbers > div:not(:nth-last-child(-n+2)) { border-bottom: 1px solid var(--rule); } }
+
+  /* Mode toggle */
+  .mode-toggle { position: fixed; bottom: 20px; right: 20px; z-index: 100; background: var(--paper); border: 1px solid var(--ink); border-radius: 999px; padding: 4px; display: inline-flex; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .mode-toggle button { border: 0; background: transparent; color: var(--ink); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; padding: 8px 14px; border-radius: 999px; cursor: pointer; }
+  .mode-toggle button.active { background: var(--ink); color: var(--paper); }
+  [data-mode="bold"] .mode-toggle { background: var(--paper-2); border-color: var(--forest); }
+  [data-mode="bold"] .mode-toggle button.active { background: var(--forest); color: #0E100D; }
+</style>
+</head>
+<body data-screen-label="about">
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand" aria-label="Deer Brook — home"></a>
+    <nav class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="practice.html">Practices</a>
+      <a href="about.html" class="active">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="strategy.html">Strategy brief</a>
+    </nav>
+    <a href="contact.html" class="btn btn-primary">
+      Start a conversation
+      <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="about-hero">
+  <div class="container">
+    <span class="eyebrow">About Deer Brook · Who are we?</span>
+    <h1 style="margin-top: 28px;">We're not your typical consultants — we've <em>been where you are.</em></h1>
+    <p class="lead">Deer Brook has experts who've worked inside higher education, ERP and finance modernization, and regulated cybersecurity environments. We meet you where you are, then craft technology solutions to fit your organization and your people. Innovative, effective, sustainable — and tailored, not templated.</p>
+  </div>
+</section>
+
+<!-- Three behaviors -->
+<section class="manifesto">
+  <div class="container">
+    <div class="manifesto-grid">
+      <div>
+        <span class="eyebrow">Our three behaviors</span>
+        <p class="mono" style="margin-top: 16px; color: var(--ink-2); max-width: 22ch; line-height: 1.6;">Everything else — practices, partner status, point of view — is downstream of these three things. They are the simplest description of what Deer Brook actually does.</p>
+      </div>
+      <div class="manifesto-body">
+        <p><span class="behavior-tag">01</span>Be <em>there.</em></p>
+        <p class="behavior-line">In the room. On the line. Inside the system when it matters. The person you meet in the first conversation is the person doing the work — and they don't leave when delivery starts. Presence is the precondition for everything else.</p>
+
+        <p><span class="behavior-tag">02</span>Make the <em>move.</em></p>
+        <p class="behavior-line">When the analysis is in and the room is waiting, we recommend. We ship. We change the configuration. Converting clarity into action is the hardest thing in consulting, and we don't outsource it back to the client.</p>
+
+        <p><span class="behavior-tag">03</span>Choose a <em>better way.</em></p>
+        <p class="behavior-line">The default path is rarely the best one. We push for the cleaner architecture, the more durable system, the AI-native pattern over the bolt-on — and then we make it real, without the upgrade theater that wastes a year of your team's time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Principles -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Operating principles</span>
+        <h2 style="margin-top: 20px;">How we work, in eight rules.</h2>
+      </div>
+      <div>
+        <p class="lead">Written down so they survive growth. Reviewed quarterly by every partner.</p>
+      </div>
+    </div>
+
+    <div class="principles">
+      <div class="principle">
+        <span class="n">01</span>
+        <h3>Senior people on the keyboard.</h3>
+        <p>The person you meet in the room is the person doing the work. No bait-and-switch staffing.</p>
+      </div>
+      <div class="principle">
+        <span class="n">02</span>
+        <h3>Working software beats working decks.</h3>
+        <p>If we can show it running by week three, we will. Demos every week. Slides only when they help.</p>
+      </div>
+      <div class="principle">
+        <span class="n">03</span>
+        <h3>Vendor-agnostic, in writing.</h3>
+        <p>We don't accept vendor referral fees. Our partner status reflects deep capability, not paid placement.</p>
+      </div>
+      <div class="principle">
+        <span class="n">04</span>
+        <h3>Eval before model.</h3>
+        <p>What "good enough to ship" means gets defined and signed off before we touch infrastructure.</p>
+      </div>
+      <div class="principle">
+        <span class="n">05</span>
+        <h3>Documentation is the deliverable.</h3>
+        <p>The system we leave behind is the runbook. If we wrote it and didn't write down why, we didn't ship.</p>
+      </div>
+      <div class="principle">
+        <span class="n">06</span>
+        <h3>Hand over the keys, on purpose.</h3>
+        <p>The point is not to be needed forever. Enablement is part of every milestone, not an afterthought.</p>
+      </div>
+      <div class="principle">
+        <span class="n">07</span>
+        <h3>Say no, on day one if necessary.</h3>
+        <p>If the engagement isn't a fit, we say so before scoping. We'd rather refer you well than under-deliver.</p>
+      </div>
+      <div class="principle">
+        <span class="n">08</span>
+        <h3>Publish what we learn.</h3>
+        <p>Field notes go out weekly. Templates, playbooks, and policies are open. We get better when we teach.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- By the numbers -->
+<section class="compact" style="padding-top: 0;">
+  <div class="container">
+    <span class="eyebrow">The Deer Brook Difference</span>
+    <h2 style="margin-top: 16px;">Why organizations choose us as their long-term partner.</h2>
+    <div class="by-numbers">
+      <div><div class="k">Partnership</div><div class="v">not transactional consulting</div></div>
+      <div><div class="k">Cross-domain</div><div class="v">insight no single-industry shop has</div></div>
+      <div><div class="k">Tailored</div><div class="v">crafted, not templated</div></div>
+      <div><div class="k">Defensible</div><div class="v">innovative, effective, sustainable</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Leadership -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Leadership · who are we?</span>
+        <h2 style="margin-top: 20px;">The people accountable.</h2>
+      </div>
+      <div>
+        <p class="lead">A senior practitioner-led firm. The person you meet in the first conversation is the person doing the work — daily, weekly, or quarterly, depending on what you need. Bios below are placeholders pending the formal team page; replace with the leadership roster from <span class="mono">deer-brook.com/who-are-we/</span>.</p>
+      </div>
+    </div>
+
+    <div class="leaders">
+      <div class="leader">
+        <div class="portrait">[ portrait · founding partner ]</div>
+        <div class="role">Founding Partner</div>
+        <h4>[ Name ]</h4>
+        <p class="bio">Replace with leadership bio from Who Are We page. Founding partner narrative — origin, focus, current portfolio.</p>
+      </div>
+      <div class="leader">
+        <div class="portrait">[ portrait · higher-ed lead ]</div>
+        <div class="role">Partner · Higher Education</div>
+        <h4>[ Name ]</h4>
+        <p class="bio">Replace with real bio. Leads transformation services, SIS / CRM / LMS implementation, and Moving Forward for Anthology Student customers.</p>
+      </div>
+      <div class="leader">
+        <div class="portrait">[ portrait · dynamics lead ]</div>
+        <div class="role">Partner · Deer Brook Dynamics</div>
+        <h4>[ Name ]</h4>
+        <p class="bio">Replace with real bio. Leads D365 Business Central, F&amp;O, CRM modernization, Copilot, Power Automate, and AI-enabled ERP work.</p>
+      </div>
+      <div class="leader">
+        <div class="portrait">[ portrait · cyber advisory ]</div>
+        <div class="role">Partner · Cyber Advisory</div>
+        <h4>[ Name ]</h4>
+        <p class="bio">Replace with real bio. Leads vCISO retainers, CMMC readiness, and HIPAA Security Risk Assessments.</p>
+      </div>
+      <div class="leader">
+        <div class="portrait">[ portrait · technical services ]</div>
+        <div class="role">Partner · Technical Services</div>
+        <h4>[ Name ]</h4>
+        <p class="bio">Replace with real bio. Leads threat &amp; vulnerability management, network assessments, and cloud / Web / API security work.</p>
+      </div>
+      <div class="leader">
+        <div class="portrait">[ portrait · delivery ]</div>
+        <div class="role">Partner · Delivery</div>
+        <h4>[ Name ]</h4>
+        <p class="bio">Replace with real bio. Cross-vertical delivery, engagement quality, and post-launch support.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Difference detail -->
+<section style="background: var(--paper-2); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">The three commitments</span>
+        <h2 style="margin-top: 20px;">What "the Deer Brook difference" actually means.</h2>
+      </div>
+      <div>
+        <p class="lead">Written for the client, not for the brochure. Each one is something a client can hold us accountable to.</p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-row">
+        <span class="tl-year">01</span>
+        <span class="tl-title">Partnerships, not transactions.</span>
+        <p class="tl-body">We're not consultants who come and go. We're an extension of your team. We adapt our involvement to what you need — daily, weekly, or quarterly. You're not getting a service; you're getting a partner invested in your success.</p>
+      </div>
+      <div class="tl-row">
+        <span class="tl-year">02</span>
+        <span class="tl-title">Industry expertise &amp; cross-domain insights.</span>
+        <p class="tl-body">Our diverse expertise is your wealth of opportunity. Our teams move across higher education, finance, cybersecurity, and ERP — giving you cross-domain insight that single-industry consultants can't offer.</p>
+      </div>
+      <div class="tl-row">
+        <span class="tl-year">03</span>
+        <span class="tl-title">Tailored solutions, not playbooks.</span>
+        <p class="tl-body">Technology is a people process, too. That's why we craft an approach that'll make you successful, instead of imposing a one-size-fits-all solution. We meet you where you are, and guide you where you need to go.</p>
+      </div>
+      <div class="tl-row">
+        <span class="tl-year">04</span>
+        <span class="tl-title">Defensible by design.</span>
+        <p class="tl-body">Innovative, effective, sustainable. We build for the audit trail, the board review, and the long-term operator — not just the launch demo. CMMC, HIPAA, and regulatory readiness are first-class concerns from day one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Careers / closing -->
+<section>
+  <div class="container">
+    <div style="border-top: 1px solid var(--rule); padding-top: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px;">
+      <div>
+        <span class="eyebrow">Careers</span>
+        <h2 style="margin-top: 16px; font-size: clamp(36px, 4.5vw, 56px);">Senior practitioners only.</h2>
+        <p class="lead muted" style="margin-top: 16px;">We hire experienced operators — usually with a decade of in-the-seat experience. No junior staff augmentation. No bench. If that's you, we'd like to hear what you've shipped.</p>
+        <a href="#" class="btn btn-link" style="margin-top: 24px;">Open roles · 4 →</a>
+      </div>
+      <div>
+        <span class="eyebrow">Press &amp; speaking</span>
+        <h2 style="margin-top: 16px; font-size: clamp(36px, 4.5vw, 56px);">Available, sparingly.</h2>
+        <p class="lead muted" style="margin-top: 16px;">Our partners speak on AI governance, ERP modernization, higher-ed technology, and the boring parts of cybersecurity. Press inquiries route to press@deer-brook.com.</p>
+        <a href="contact.html" class="btn btn-link" style="margin-top: 24px;">Press contact →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-meta">
+      <div class="footer-brand">
+        <a href="index.html" class="brand" aria-label="Deer Brook — home"></a>
+        <p class="muted" style="font-size: 14px; max-width: 36ch; margin-top: 16px;">Innovative, effective, sustainable. Modern technology consulting helping organizations modernize through partnerships, not transactions.</p>
+        <p class="mono" style="margin-top: 18px;">49 Pineland Drive<br />New Gloucester, ME 04260</p>
+        <p class="mono" style="margin-top: 6px;"><a href="tel:+12073870396" style="border-bottom: 1px solid var(--rule);">1-207-387-0396</a></p>
+        <div style="display: flex; gap: 14px; margin-top: 18px;" class="mono">
+          <a href="https://www.linkedin.com/company/deerbrookcyber" target="_blank" rel="noopener" style="border-bottom: 1px solid var(--rule);">LinkedIn</a>
+          <a href="https://www.facebook.com/deerbrookcyber" target="_blank" rel="noopener" style="border-bottom: 1px solid var(--rule);">Facebook</a>
+          <a href="https://www.youtube.com/@deerbrookcyber" target="_blank" rel="noopener" style="border-bottom: 1px solid var(--rule);">YouTube</a>
+        </div>
+      </div>
+      <div class="footer-actions">
+        <h6>Company</h6>
+        <ul>
+          <li><a href="about.html">Who are we?</a></li>
+          <li><a href="about.html#careers">Careers</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="strategy.html">Brand &amp; strategy</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+        <h6 style="margin-top: 22px;">Insights</h6>
+        <ul>
+          <li><a href="#">Field notes</a></li>
+          <li><a href="#">Moving Forward podcast</a></li>
+          <li><a href="#">Resources &amp; articles</a></li>
+        </ul>
+      </div>
+      <div class="footer-newsletter" id="brook-signup">
+        <span class="eyebrow">Weekly · The Brook</span>
+        <h5>Field notes for CIOs &amp; CFOs.</h5>
+        <p>Practical, technical, vendor-free. One short briefing on what we're learning across engagements — sent Sundays.</p>
+        <form onsubmit="event.preventDefault(); this.closest('.footer-newsletter').classList.add('subscribed'); this.querySelector('button').textContent='Subscribed \u2713';">
+          <input type="email" required placeholder="you@company.com" aria-label="Email address" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="meta">One email a week · unsubscribe in one click</div>
+      </div>
+    </div>
+
+    <div class="footer-services six">
+      <div class="footer-svc">
+        <h6><a href="practice.html">AI &amp; Automation →</a></h6>
+        <ul>
+          <li><a href="practice.html">AI Readiness Sprint</a></li>
+          <li><a href="practice.html">Embedded AI Build</a></li>
+          <li><a href="practice.html">AI Operating Partner</a></li>
+          <li><a href="practice.html">AI Policy &amp; Governance</a></li>
+          <li><a href="practice.html">Agentic workflows</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-higher-ed.html">Higher Education →</a></h6>
+        <ul>
+          <li><a href="practice-higher-ed.html">Transformation Services</a></li>
+          <li><a href="practice-higher-ed.html">Organizational Development</a></li>
+          <li><a href="practice-higher-ed.html">System Implementation</a></li>
+          <li><a href="practice-higher-ed.html">SIS · CRM · LMS</a></li>
+          <li><a href="practice-higher-ed.html">Moving Forward with Anthology</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-dynamics.html">Deer Brook Dynamics →</a></h6>
+        <ul>
+          <li><a href="practice-dynamics.html">ERP Modernization &amp; Cloud</a></li>
+          <li><a href="practice-dynamics.html">D365 Business Central</a></li>
+          <li><a href="practice-dynamics.html">D365 Finance &amp; Ops</a></li>
+          <li><a href="practice-dynamics.html">CRM Modernization</a></li>
+          <li><a href="practice-dynamics.html">Copilot &amp; Power Platform</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-cyber.html">Cyber Advisory →</a></h6>
+        <ul>
+          <li><a href="practice-cyber.html">vCISO Services</a></li>
+          <li><a href="practice-cyber.html">CMMC Services</a></li>
+          <li><a href="practice-cyber.html">HIPAA Security Risk Assessments</a></li>
+          <li><a href="practice-cyber.html">Governance · Risk · Compliance</a></li>
+          <li><a href="practice-cyber.html">Policy &amp; board reporting</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-technical.html">Technical Services →</a></h6>
+        <ul>
+          <li><a href="practice-technical.html">Threat &amp; Vulnerability Mgmt</a></li>
+          <li><a href="practice-technical.html">External Network Assessments</a></li>
+          <li><a href="practice-technical.html">Internal Network Assessments</a></li>
+          <li><a href="practice-technical.html">Cloud Security Assessments</a></li>
+          <li><a href="practice-technical.html">Web / API Security Assessments</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-data.html">Data &amp; Analytics →</a></h6>
+        <ul>
+          <li><a href="practice-data.html">Microsoft Fabric &amp; Power BI</a></li>
+          <li><a href="practice-data.html">Data warehouse modernization</a></li>
+          <li><a href="practice-data.html">Semantic layer &amp; governance</a></li>
+          <li><a href="practice-data.html">Governed AI access</a></li>
+          <li><a href="practice-data.html">Executive reporting</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-legal">
+      <span>© 2026 Deer Brook Consulting LLC · All rights reserved</span>
+      <span>Privacy · Terms · Accessibility</span>
+    </div>
+  </div>
+</footer>
+
+<div class="mode-toggle" role="group" aria-label="Visual direction">
+  <button id="modeEditorial" class="active">Editorial</button>
+  <button id="modeBold">Bold</button>
+</div>
+
+<script src="brand.js"></script>
+<script>
+  const root = document.documentElement;
+  const editBtn = document.getElementById('modeEditorial');
+  const boldBtn = document.getElementById('modeBold');
+  function applyMode(m) {
+    root.setAttribute('data-mode', m);
+    editBtn.classList.toggle('active', m === 'editorial');
+    boldBtn.classList.toggle('active', m === 'bold');
+    localStorage.setItem('db-mode', m);
+  }
+  editBtn.addEventListener('click', () => applyMode('editorial'));
+  boldBtn.addEventListener('click', () => applyMode('bold'));
+  applyMode(localStorage.getItem('db-mode') || 'editorial');
+
+  document.querySelectorAll('section, .principle, .leader, .tl-row').forEach(el => el.classList.add('reveal'));
+</script>
+</body>
+</html>

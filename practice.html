@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="en" data-mode="editorial">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AI &amp; Automation — Deer Brook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="brand.css" />
+<style>
+  /* Practice nav (left sticky) */
+  .practice-shell {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 64px;
+    padding-top: 56px;
+  }
+  @media (max-width: 960px) { .practice-shell { grid-template-columns: 1fr; gap: 24px; } }
+  .practice-nav {
+    position: sticky;
+    top: 96px;
+    align-self: start;
+    border-left: 1px solid var(--rule);
+    padding-left: 20px;
+  }
+  .practice-nav .label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  .practice-nav ul { list-style: none; margin: 0; padding: 0; }
+  .practice-nav li { margin-bottom: 8px; }
+  .practice-nav a {
+    display: block;
+    padding: 6px 0;
+    font-size: 14px;
+    color: var(--ink-2);
+    transition: color 0.15s ease, padding 0.15s ease;
+    border-bottom: 1px dashed transparent;
+  }
+  .practice-nav a:hover { color: var(--ink); padding-left: 6px; }
+  .practice-nav a.active { color: var(--ink); border-bottom-color: var(--ink); }
+  @media (max-width: 960px) {
+    .practice-nav { position: static; border-left: 0; padding-left: 0; }
+    .practice-nav ul { display: flex; flex-wrap: wrap; gap: 4px; }
+    .practice-nav li { margin: 0; }
+    .practice-nav a { padding: 6px 12px; border: 1px solid var(--rule); border-radius: 999px; }
+  }
+
+  /* Practice hero */
+  .p-hero {
+    padding: 8px 0 64px;
+  }
+  .p-hero h1 { font-size: clamp(48px, 6vw, 80px); max-width: 14ch; letter-spacing: -0.02em; }
+  .p-hero h1 em { color: var(--forest); font-style: italic; font-weight: 300; }
+  .p-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+  }
+  @media (max-width: 720px) { .p-meta { grid-template-columns: 1fr; gap: 18px; } }
+  .p-meta .label { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  .p-meta .val { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.01em; }
+
+  /* Three offer cards */
+  .offers {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+  .offer {
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
+  }
+  .offer .duration { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .offer h3 { font-family: var(--font-display); font-weight: 400; font-size: 32px; letter-spacing: -0.015em; margin: 20px 0 14px; line-height: 1.1; }
+  .offer p { font-size: 15px; color: var(--ink-2); margin: 0 0 24px; }
+  .offer ul { list-style: none; padding: 0; margin: 0 0 24px; font-size: 13px; }
+  .offer ul li { padding: 6px 0; border-bottom: 1px dashed var(--rule); font-family: var(--font-mono); color: var(--ink-2); }
+  .offer .price { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: end; }
+  .offer .price .amt { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.01em; }
+  .offer .price .unit { font-family: var(--font-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  @media (max-width: 960px) { .offers { grid-template-columns: 1fr; } }
+
+  /* Process steps */
+  .process {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 40px;
+    counter-reset: step;
+  }
+  .step {
+    border-right: 1px solid var(--rule);
+    padding: 28px 28px 28px 0;
+    counter-increment: step;
+  }
+  .step:last-child { border-right: 0; }
+  .step:not(:first-child) { padding-left: 28px; }
+  .step .step-n {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--forest);
+    letter-spacing: 0.12em;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  .step h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 24px;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .step p { font-size: 14px; color: var(--ink-2); margin: 0; }
+  @media (max-width: 960px) { .process { grid-template-columns: 1fr 1fr; } .step:nth-child(even) { border-right: 0; } }
+  @media (max-width: 560px) { .process { grid-template-columns: 1fr; } .step { border-right: 0 !important; padding-left: 0 !important; padding-right: 0; border-bottom: 1px solid var(--rule); } .step:last-child { border-bottom: 0; } }
+
+  /* Case study card */
+  .case {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  @media (max-width: 800px) { .case { grid-template-columns: 1fr; } }
+  .case-img { min-height: 320px; border-right: 1px solid var(--rule); border-radius: 0; }
+  .case-text { padding: 40px; }
+  .case-text h3 { font-family: var(--font-display); font-size: 32px; letter-spacing: -0.015em; line-height: 1.1; margin: 16px 0 16px; }
+  .case-text p { color: var(--ink-2); max-width: 56ch; }
+  .case-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+  .case-stats > div { padding-right: 18px; border-right: 1px solid var(--rule); }
+  .case-stats > div:last-child { border-right: 0; padding-left: 18px; padding-right: 0; }
+  .case-stats > div:not(:first-child):not(:last-child) { padding-left: 18px; }
+  .case-stats .k { font-family: var(--font-display); font-size: 32px; letter-spacing: -0.02em; }
+  .case-stats .v { font-family: var(--font-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 6px; }
+
+  /* FAQ accordion */
+  .faq { border-top: 1px solid var(--ink); margin-top: 32px; }
+  .faq-item { border-bottom: 1px solid var(--rule); }
+  .faq-q {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    text-align: left;
+    padding: 22px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+  .faq-q .plus { font-family: var(--font-mono); font-size: 18px; color: var(--muted); transition: transform 0.2s ease; }
+  .faq-item.open .plus { transform: rotate(45deg); color: var(--forest); }
+  .faq-a {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    color: var(--ink-2);
+    font-size: 15px;
+    max-width: 64ch;
+  }
+  .faq-item.open .faq-a { max-height: 400px; padding: 0 0 24px; }
+
+  /* Stack list */
+  .stack {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-top: 40px;
+  }
+  @media (max-width: 720px) { .stack { grid-template-columns: 1fr 1fr; } }
+  .stack-col h6 { font-family: var(--font-mono); font-size: 11px; color: var(--forest); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+  .stack-col ul { list-style: none; padding: 0; margin: 0; }
+  .stack-col li { padding: 8px 0; border-bottom: 1px dashed var(--rule); font-size: 14px; color: var(--ink-2); }
+
+  /* Related practices */
+  .related {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 32px;
+  }
+  @media (max-width: 800px) { .related { grid-template-columns: 1fr; } }
+  .related-card {
+    padding: 24px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color 0.18s ease;
+  }
+  .related-card:hover { border-color: var(--ink); }
+  .related-card h5 { font-family: var(--font-display); font-weight: 400; font-size: 22px; letter-spacing: -0.01em; }
+  .related-card p { font-size: 13px; color: var(--ink-2); margin: 0; }
+  .related-card .arr { margin-top: auto; padding-top: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* Mode toggle (shared) */
+  .mode-toggle { position: fixed; bottom: 20px; right: 20px; z-index: 100; background: var(--paper); border: 1px solid var(--ink); border-radius: 999px; padding: 4px; display: inline-flex; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .mode-toggle button { border: 0; background: transparent; color: var(--ink); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; padding: 8px 14px; border-radius: 999px; cursor: pointer; }
+  .mode-toggle button.active { background: var(--ink); color: var(--paper); }
+  [data-mode="bold"] .mode-toggle { background: var(--paper-2); border-color: var(--forest); }
+  [data-mode="bold"] .mode-toggle button.active { background: var(--forest); color: #0E100D; }
+</style>
+</head>
+<body data-screen-label="practice-ai-automation">
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand" aria-label="Deer Brook — home"></a>
+    <nav class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="practice.html" class="active">Practices</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="strategy.html">Strategy brief</a>
+    </nav>
+    <a href="contact.html" class="btn btn-primary">
+      Start a conversation
+      <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</header>
+
+<!-- Breadcrumb -->
+<div class="container" style="padding-top: 24px;">
+  <div class="mono">
+    <a href="home.html" style="color: var(--muted);">Home</a> <span style="margin: 0 8px;">/</span>
+    <a href="practice.html" style="color: var(--muted);">Practices</a> <span style="margin: 0 8px;">/</span>
+    <span style="color: var(--ink);">AI &amp; Automation</span>
+  </div>
+</div>
+
+<div class="container">
+  <div class="practice-shell">
+    <!-- Left nav -->
+    <aside class="practice-nav">
+      <div class="label">All practices</div>
+      <ul>
+        <li><a href="practice.html" class="active">AI &amp; Automation</a></li>
+        <li><a href="practice-higher-ed.html">Higher Education</a></li>
+        <li><a href="practice-dynamics.html">Deer Brook Dynamics</a></li>
+        <li><a href="practice-cyber.html">Cyber Advisory &amp; Professional</a></li>
+        <li><a href="practice-technical.html">Technical Services</a></li>
+        <li><a href="practice-data.html">Data &amp; Analytics</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main -->
+    <main>
+      <section class="p-hero" style="padding-top: 0;">
+        <span class="eyebrow">Practice 01 · AI &amp; Automation</span>
+        <h1 style="margin-top: 24px;">Intelligence that lives <em>inside the work.</em></h1>
+        <p class="lead" style="margin-top: 28px;">We design AI systems that sit inside the workflows your business actually runs — not as a separate dashboard, not as a side project. The model is one component. The work is making it dependable in production.</p>
+
+        <div class="p-meta">
+          <div>
+            <div class="label">Practice lead</div>
+            <div class="val">Maren Holcombe</div>
+            <div class="mono" style="margin-top: 4px;">Partner · ex Anthropic, ex Workday</div>
+          </div>
+          <div>
+            <div class="label">Engagements</div>
+            <div class="val">41 shipped · 11 in flight</div>
+            <div class="mono" style="margin-top: 4px;">since 2022</div>
+          </div>
+          <div>
+            <div class="label">Typical engagement</div>
+            <div class="val">8–16 weeks</div>
+            <div class="mono" style="margin-top: 4px;">fixed scope, milestone-billed</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Offer cards -->
+      <section class="compact" style="padding-top: 0;">
+        <div class="section-head" style="margin-bottom: 32px;">
+          <div>
+            <span class="eyebrow">How we engage</span>
+            <h2 style="margin-top: 20px; font-size: clamp(36px, 4.5vw, 48px);">Three ways in.</h2>
+          </div>
+          <div>
+            <p class="lead">Each one is a complete engagement. Start narrow. Expand when something works. We won't sell you a 30-week roadmap on a first call.</p>
+          </div>
+        </div>
+
+        <div class="offers">
+          <div class="offer">
+            <span class="duration">Engagement A · 2 weeks</span>
+            <h3>AI Readiness Sprint</h3>
+            <p>A senior practitioner pair runs ten interviews, reviews your data and security posture, and ships a written readiness assessment with three prioritized starting points.</p>
+            <ul>
+              <li>Stakeholder interviews · 10</li>
+              <li>Tech &amp; data review</li>
+              <li>Governance gap analysis</li>
+              <li>Prioritized opportunity map</li>
+              <li>Written report + 90-min readout</li>
+            </ul>
+            <div class="price">
+              <div><div class="amt">Fixed scope</div><div class="unit">flat fee · single billable</div></div>
+              <a href="contact.html" class="btn btn-link">Scope →</a>
+            </div>
+          </div>
+          <div class="offer" style="background: var(--paper-2);">
+            <span class="duration" style="color: var(--forest);">Engagement B · 8–12 weeks · most common</span>
+            <h3>Embedded AI Build</h3>
+            <p>We embed two to four practitioners into a real operational problem — invoice processing, agent routing, contract review — and ship a working production-ready system on a fixed timeline.</p>
+            <ul>
+              <li>Production-ready system</li>
+              <li>Eval suite + monitoring</li>
+              <li>Governance &amp; usage policy</li>
+              <li>Owner-team enablement</li>
+              <li>30-day post-launch tail</li>
+            </ul>
+            <div class="price">
+              <div><div class="amt">Milestone-billed</div><div class="unit">4 milestones · weekly demo</div></div>
+              <a href="contact.html" class="btn btn-link">Scope →</a>
+            </div>
+          </div>
+          <div class="offer">
+            <span class="duration">Engagement C · ongoing</span>
+            <h3>AI Operating Partner</h3>
+            <p>A senior partner serves as your fractional Chief AI Officer — quarterly strategy, vendor evaluation, governance, board readouts, and pull-in delivery when you need it.</p>
+            <ul>
+              <li>Fractional CAIO presence</li>
+              <li>Quarterly board materials</li>
+              <li>Vendor &amp; model selection</li>
+              <li>Policy &amp; governance ops</li>
+              <li>Delivery on call</li>
+            </ul>
+            <div class="price">
+              <div><div class="amt">Retainer</div><div class="unit">quarterly · 12-month min</div></div>
+              <a href="contact.html" class="btn btn-link">Scope →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Process -->
+      <section class="compact">
+        <div class="section-head" style="margin-bottom: 24px;">
+          <div>
+            <span class="eyebrow">How we work</span>
+            <h2 style="margin-top: 20px; font-size: clamp(36px, 4.5vw, 48px);">A working method, not a methodology deck.</h2>
+          </div>
+          <div>
+            <p class="lead">We've shipped enough of these to know what gets stuck where. The point is not to follow a process — the point is to ship something your team can run after we leave.</p>
+          </div>
+        </div>
+
+        <div class="process">
+          <div class="step">
+            <div class="step-n">Step 01</div>
+            <h4>Locate the work.</h4>
+            <p>We sit with the team. We find the workflow where intelligence would actually change the operating posture — not where it's easiest to demo.</p>
+          </div>
+          <div class="step">
+            <div class="step-n">Step 02</div>
+            <h4>Make it measurable.</h4>
+            <p>Before we touch a model, we write the eval. What does "good enough to ship" mean? What does "regressed" look like? It's the single biggest difference.</p>
+          </div>
+          <div class="step">
+            <div class="step-n">Step 03</div>
+            <h4>Build to production.</h4>
+            <p>We build inside your stack — Azure, AWS, your IDP, your data perimeter. No vendor lock-in disguised as accelerator code.</p>
+          </div>
+          <div class="step">
+            <div class="step-n">Step 04</div>
+            <h4>Hand off the keys.</h4>
+            <p>We enable an owner team, document what we did and why, and leave runbooks that survive contact with reality. Thirty-day post-launch tail.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Case study -->
+      <section class="compact">
+        <div class="section-head" style="margin-bottom: 24px;">
+          <div>
+            <span class="eyebrow">A recent engagement</span>
+            <h2 style="margin-top: 20px; font-size: clamp(36px, 4.5vw, 48px);">Mid-Atlantic University System.</h2>
+          </div>
+          <div>
+            <p class="lead">A 14,000-student research university. Five disconnected student information systems. No written AI policy. A new president with a 100-day mandate.</p>
+          </div>
+        </div>
+
+        <div class="case">
+          <div class="placeholder-img case-img">[ workstream · advising operations ]</div>
+          <div class="case-text">
+            <span class="eyebrow">Engagement · 14 weeks · embedded build</span>
+            <h3>Faster decisions for advisors. Same systems, less friction.</h3>
+            <p>We embedded a team of three for fourteen weeks. We built an advising assistant that reads across student records, financial aid, and course history — and surfaces the right next conversation for each advisor's queue every morning. We wrote the institution's AI usage policy alongside it.</p>
+            <div class="case-stats">
+              <div><div class="k">62%</div><div class="v">faster month-end close</div></div>
+              <div><div class="k">3,400</div><div class="v">advising sessions reviewed weekly</div></div>
+              <div><div class="k">$3.1M</div><div class="v">annual operating savings</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stack we work in -->
+      <section class="compact">
+        <div class="section-head" style="margin-bottom: 16px;">
+          <div>
+            <span class="eyebrow">The stack we work in</span>
+            <h2 style="margin-top: 20px; font-size: clamp(36px, 4.5vw, 48px);">Vendor-agnostic, opinion-rich.</h2>
+          </div>
+          <div>
+            <p class="lead">We hold strong opinions about which tools fit which problems. We hold no opinion about which vendor pays a referral fee — we don't take them.</p>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="stack-col">
+            <h6>Models &amp; agents</h6>
+            <ul>
+              <li>Anthropic Claude</li>
+              <li>OpenAI GPT</li>
+              <li>Azure OpenAI</li>
+              <li>AWS Bedrock</li>
+              <li>Mistral · open-weight</li>
+            </ul>
+          </div>
+          <div class="stack-col">
+            <h6>Orchestration</h6>
+            <ul>
+              <li>LangGraph</li>
+              <li>Power Automate</li>
+              <li>Temporal</li>
+              <li>n8n (lighter loads)</li>
+              <li>Custom Python</li>
+            </ul>
+          </div>
+          <div class="stack-col">
+            <h6>Data &amp; retrieval</h6>
+            <ul>
+              <li>Microsoft Fabric</li>
+              <li>Snowflake</li>
+              <li>Databricks</li>
+              <li>pgvector · Pinecone</li>
+              <li>Azure AI Search</li>
+            </ul>
+          </div>
+          <div class="stack-col">
+            <h6>Governance &amp; eval</h6>
+            <ul>
+              <li>Custom eval harnesses</li>
+              <li>Braintrust</li>
+              <li>Microsoft Purview</li>
+              <li>OneTrust AI</li>
+              <li>Written policy templates</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="compact">
+        <div class="section-head" style="margin-bottom: 0;">
+          <div>
+            <span class="eyebrow">Questions we get</span>
+            <h2 style="margin-top: 20px; font-size: clamp(36px, 4.5vw, 48px);">What clients ask in the first call.</h2>
+          </div>
+          <div>
+            <p class="lead">If you have a different question, we'd rather hear it directly. The form on Contact reaches a partner, not a bot.</p>
+          </div>
+        </div>
+
+        <div class="faq">
+          <div class="faq-item">
+            <button class="faq-q">Do we need a data lake before any of this makes sense? <span class="plus">+</span></button>
+            <div class="faq-a">No. Most useful AI work starts against the systems you already have — ERPs, ticketing systems, document stores. We build retrieval and governance against what exists. If a data platform is actually the right next investment, our Data &amp; Analytics practice will tell you that directly.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Will you write our AI usage policy? <span class="plus">+</span></button>
+            <div class="faq-a">Yes — and we'll do it in nine pages, not ninety. We've published a template we use as the starting point. It addresses model selection, data handling, employee use, customer-facing systems, board reporting, and audit. It's drafted for CFOs and CIOs to sign, not for lawyers to redline.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Are you Microsoft-only? <span class="plus">+</span></button>
+            <div class="faq-a">No. We're a Microsoft Solutions Partner and we run a deep Dynamics practice — but our AI work is delivered against whatever stack fits the problem. We've shipped on Azure, AWS, Anthropic, OpenAI, Bedrock, and on-prem GPU clusters. We don't take vendor referral fees.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">How do you price an embedded build? <span class="plus">+</span></button>
+            <div class="faq-a">Fixed scope, milestone-billed across four milestones over eight to twelve weeks. The first milestone is the eval — defined and signed off — because everything else depends on it. You see a working demo every week.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Can you work with our security and compliance team? <span class="plus">+</span></button>
+            <div class="faq-a">Yes. Most of our engagements run inside customer security perimeters with named-user access only. We've delivered in higher-ed (GLBA, FERPA), government (StateRAMP), healthcare (HIPAA), and SOC 2 environments. Our Cybersecurity practice often pairs in for sensitive builds.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">What does "AI-native" actually mean in practice? <span class="plus">+</span></button>
+            <div class="faq-a">It means we design systems assuming a model is a stable component — that retrieval, evals, monitoring, and fallback are first-class infrastructure rather than nice-to-haves. It also means we resist building a separate "AI product." The work is making the existing business operate better. The chrome is invisible.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Related -->
+      <section class="compact">
+        <span class="eyebrow">Often paired with</span>
+        <h2 style="margin-top: 16px; font-size: clamp(28px, 3vw, 40px);">Where this practice connects.</h2>
+        <div class="related">
+          <a href="practice-data.html" class="related-card">
+            <h5>Data &amp; Analytics</h5>
+            <p>Most embedded builds touch retrieval. Half of them surface a data architecture decision worth making.</p>
+            <span class="arr">View practice →</span>
+          </a>
+          <a href="practice-cyber.html" class="related-card">
+            <h5>Cyber Advisory &amp; Professional</h5>
+            <p>Identity, data perimeter, and AI usage policy live next to each other. We pair the practices when stakes are real.</p>
+            <span class="arr">View practice →</span>
+          </a>
+          <a href="practice-dynamics.html" class="related-card">
+            <h5>Deer Brook Dynamics</h5>
+            <p>Most AI work pairs with the systems of record. Copilot, Power Platform, and D365 are common terrain.</p>
+            <span class="arr">View practice →</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Closing CTA -->
+      <section class="compact" style="margin-bottom: 32px;">
+        <div style="border: 1px solid var(--ink); border-radius: var(--radius-lg); padding: 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: end;">
+          <div>
+            <span class="eyebrow">Start here</span>
+            <h2 style="margin-top: 16px; font-size: clamp(32px, 4vw, 48px);">Send us a paragraph.</h2>
+            <p class="lead muted" style="margin-top: 16px;">Describe the workflow. We'll reply with whether this is a fit, two questions, and a recommended starting engagement. From a partner. Within two business days.</p>
+          </div>
+          <div>
+            <a href="contact.html" class="btn btn-primary">
+              Email a partner
+              <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<!-- FOOTER (shared shape) -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-meta">
+      <div class="footer-brand">
+        <a href="index.html" class="brand" aria-label="Deer Brook — home"></a>
+        <p class="muted" style="font-size: 14px; max-width: 36ch; margin-top: 16px;">Innovative, effective, sustainable. Modern technology consulting helping organizations modernize through partnerships, not transactions.</p>
+        <p class="mono" style="margin-top: 18px;">49 Pineland Drive<br />New Gloucester, ME 04260</p>
+        <p class="mono" style="margin-top: 6px;"><a href="tel:+12073870396" style="border-bottom: 1px solid var(--rule);">1-207-387-0396</a></p>
+        <div style="display: flex; gap: 14px; margin-top: 18px;" class="mono">
+          <a href="https://www.linkedin.com/company/deerbrookcyber" target="_blank" rel="noopener" style="border-bottom: 1px solid var(--rule);">LinkedIn</a>
+          <a href="https://www.facebook.com/deerbrookcyber" target="_blank" rel="noopener" style="border-bottom: 1px solid var(--rule);">Facebook</a>
+          <a href="https://www.youtube.com/@deerbrookcyber" target="_blank" rel="noopener" style="border-bottom: 1px solid var(--rule);">YouTube</a>
+        </div>
+      </div>
+      <div class="footer-actions">
+        <h6>Company</h6>
+        <ul>
+          <li><a href="about.html">Who are we?</a></li>
+          <li><a href="about.html#careers">Careers</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="strategy.html">Brand &amp; strategy</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+        <h6 style="margin-top: 22px;">Insights</h6>
+        <ul>
+          <li><a href="#">Field notes</a></li>
+          <li><a href="#">Moving Forward podcast</a></li>
+          <li><a href="#">Resources &amp; articles</a></li>
+        </ul>
+      </div>
+      <div class="footer-newsletter" id="brook-signup">
+        <span class="eyebrow">Weekly · The Brook</span>
+        <h5>Field notes for CIOs &amp; CFOs.</h5>
+        <p>Practical, technical, vendor-free. One short briefing on what we're learning across engagements — sent Sundays.</p>
+        <form onsubmit="event.preventDefault(); this.closest('.footer-newsletter').classList.add('subscribed'); this.querySelector('button').textContent='Subscribed \u2713';">
+          <input type="email" required placeholder="you@company.com" aria-label="Email address" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="meta">One email a week · unsubscribe in one click</div>
+      </div>
+    </div>
+
+    <div class="footer-services six">
+      <div class="footer-svc">
+        <h6><a href="practice.html">AI &amp; Automation →</a></h6>
+        <ul>
+          <li><a href="practice.html">AI Readiness Sprint</a></li>
+          <li><a href="practice.html">Embedded AI Build</a></li>
+          <li><a href="practice.html">AI Operating Partner</a></li>
+          <li><a href="practice.html">AI Policy &amp; Governance</a></li>
+          <li><a href="practice.html">Agentic workflows</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-higher-ed.html">Higher Education →</a></h6>
+        <ul>
+          <li><a href="practice-higher-ed.html">Transformation Services</a></li>
+          <li><a href="practice-higher-ed.html">Organizational Development</a></li>
+          <li><a href="practice-higher-ed.html">System Implementation</a></li>
+          <li><a href="practice-higher-ed.html">SIS · CRM · LMS</a></li>
+          <li><a href="practice-higher-ed.html">Moving Forward with Anthology</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-dynamics.html">Deer Brook Dynamics →</a></h6>
+        <ul>
+          <li><a href="practice-dynamics.html">ERP Modernization &amp; Cloud</a></li>
+          <li><a href="practice-dynamics.html">D365 Business Central</a></li>
+          <li><a href="practice-dynamics.html">D365 Finance &amp; Ops</a></li>
+          <li><a href="practice-dynamics.html">CRM Modernization</a></li>
+          <li><a href="practice-dynamics.html">Copilot &amp; Power Platform</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-cyber.html">Cyber Advisory →</a></h6>
+        <ul>
+          <li><a href="practice-cyber.html">vCISO Services</a></li>
+          <li><a href="practice-cyber.html">CMMC Services</a></li>
+          <li><a href="practice-cyber.html">HIPAA Security Risk Assessments</a></li>
+          <li><a href="practice-cyber.html">Governance · Risk · Compliance</a></li>
+          <li><a href="practice-cyber.html">Policy &amp; board reporting</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-technical.html">Technical Services →</a></h6>
+        <ul>
+          <li><a href="practice-technical.html">Threat &amp; Vulnerability Mgmt</a></li>
+          <li><a href="practice-technical.html">External Network Assessments</a></li>
+          <li><a href="practice-technical.html">Internal Network Assessments</a></li>
+          <li><a href="practice-technical.html">Cloud Security Assessments</a></li>
+          <li><a href="practice-technical.html">Web / API Security Assessments</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-data.html">Data &amp; Analytics →</a></h6>
+        <ul>
+          <li><a href="practice-data.html">Microsoft Fabric &amp; Power BI</a></li>
+          <li><a href="practice-data.html">Data warehouse modernization</a></li>
+          <li><a href="practice-data.html">Semantic layer &amp; governance</a></li>
+          <li><a href="practice-data.html">Governed AI access</a></li>
+          <li><a href="practice-data.html">Executive reporting</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-legal">
+      <span>© 2026 Deer Brook Consulting LLC · All rights reserved</span>
+      <span>Privacy · Terms · Accessibility</span>
+    </div>
+  </div>
+</footer>
+
+<div class="mode-toggle" role="group" aria-label="Visual direction">
+  <button id="modeEditorial" class="active">Editorial</button>
+  <button id="modeBold">Bold</button>
+</div>
+
+<script src="brand.js"></script>
+<script>
+  const root = document.documentElement;
+  const editBtn = document.getElementById('modeEditorial');
+  const boldBtn = document.getElementById('modeBold');
+  function applyMode(m) {
+    root.setAttribute('data-mode', m);
+    editBtn.classList.toggle('active', m === 'editorial');
+    boldBtn.classList.toggle('active', m === 'bold');
+    localStorage.setItem('db-mode', m);
+  }
+  editBtn.addEventListener('click', () => applyMode('editorial'));
+  boldBtn.addEventListener('click', () => applyMode('bold'));
+  applyMode(localStorage.getItem('db-mode') || 'editorial');
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach((q) => {
+    q.addEventListener('click', () => q.closest('.faq-item').classList.toggle('open'));
+  });
+
+  // Reveal anim
+  document.querySelectorAll('section, .offer, .step, .stack-col').forEach(el => el.classList.add('reveal'));
+</script>
+</body>
+</html>

@@ -1,0 +1,993 @@
+<!doctype html>
+<html lang="en" data-mode="bold">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Deer Brook — Operational transformation, AI-native</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="brand.css" />
+<style>
+  /* Bold direction — force dark and use its own composition */
+  :root, html { background: #0E100D; }
+
+  /* Top status bar */
+  .system-bar {
+    background: #0E100D;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .system-bar-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 8px var(--gutter);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    overflow: hidden;
+  }
+  .system-bar .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--forest); display: inline-block; margin-right: 6px; }
+  .system-bar .left, .system-bar .right { display: flex; gap: 18px; align-items: center; }
+  .system-bar .ticker {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+  .system-bar .ticker-track {
+    display: inline-flex;
+    gap: 36px;
+    animation: ticker 60s linear infinite;
+  }
+  .system-bar .ticker-track span::before { content: "·"; margin-right: 36px; color: var(--rule); }
+  .system-bar .ticker-track span:first-child::before { display: none; }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Nav adjustments for bold */
+  .nav { background: rgba(14,16,13,0.78); }
+  .nav-links a { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
+
+  /* Hero — massive type, system-like */
+  .b-hero {
+    padding: 80px 0 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .b-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(237,233,221,0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(237,233,221,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse at 80% 20%, black 30%, transparent 75%);
+  }
+  .b-hero-inner { position: relative; }
+  .b-hero h1 {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(64px, 11vw, 168px);
+    line-height: 0.86;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    margin: 0;
+  }
+  .b-hero h1 .accent {
+    color: var(--forest);
+    font-weight: 500;
+    font-style: normal;
+  }
+  .b-hero h1 .underline {
+    text-decoration: underline;
+    text-decoration-color: var(--forest);
+    text-decoration-thickness: 6px;
+    text-underline-offset: 14px;
+  }
+  .b-hero-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-top: 1px solid var(--rule);
+    margin-top: 80px;
+    padding-top: 40px;
+  }
+  @media (max-width: 800px) { .b-hero-meta { grid-template-columns: 1fr 1fr; gap: 24px; } }
+  .b-hero-meta > div { padding-right: 24px; border-right: 1px solid var(--rule); }
+  .b-hero-meta > div:last-child { border-right: 0; }
+  .b-hero-meta .l { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+  .b-hero-meta .v { font-size: 17px; color: var(--ink); max-width: 36ch; }
+  .b-hero-actions { display: flex; gap: 12px; margin-top: 56px; }
+
+  /* Subhead block */
+  .subhead {
+    padding: 80px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .subhead-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 64px;
+    align-items: start;
+  }
+  @media (max-width: 800px) { .subhead-grid { grid-template-columns: 1fr; } }
+  .subhead h2 {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(32px, 4.6vw, 56px);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    max-width: 18ch;
+  }
+  .subhead h2 em { font-style: normal; color: var(--forest); }
+  .subhead p { font-size: 19px; color: var(--ink-2); max-width: 56ch; line-height: 1.5; }
+
+  /* Practice marquee — horizontal scroll list */
+  .marquee {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 28px 0;
+    overflow: hidden;
+    background: #161915;
+  }
+  .marquee-track {
+    display: inline-flex;
+    gap: 48px;
+    animation: marquee 80s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: 56px;
+    letter-spacing: -0.02em;
+    color: var(--ink-2);
+    display: inline-flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .marquee-item::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: var(--forest);
+    border-radius: 50%;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* AI ethos — three big claims */
+  .ethos {
+    padding: 96px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .ethos-rows .ethos-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 64px;
+    padding: 56px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .ethos-rows .ethos-row:first-child { border-top: 1px solid var(--rule); }
+  @media (max-width: 800px) { .ethos-rows .ethos-row { grid-template-columns: 1fr; gap: 18px; padding: 36px 0; } }
+  .ethos-num {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--forest);
+    letter-spacing: 0.1em;
+  }
+  .ethos-row h3 {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(28px, 3.4vw, 44px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    max-width: 18ch;
+    margin: 0;
+  }
+  .ethos-row p { font-size: 17px; color: var(--ink-2); max-width: 44ch; margin: 0; line-height: 1.55; }
+  .ethos-row p + p { margin-top: 14px; }
+
+  /* Behaviors (bold direction) */
+  .b-behaviors {
+    padding: 96px 0;
+    border-top: 1px solid var(--rule);
+    background: #161915;
+    border-bottom: 1px solid var(--rule);
+  }
+  .b-behave-rows {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .b-behave {
+    padding: 48px 36px 48px 0;
+    border-right: 1px solid var(--rule);
+  }
+  .b-behave:last-child { border-right: 0; padding-right: 0; }
+  .b-behave:not(:first-child) { padding-left: 36px; }
+  .b-behave-n {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--forest);
+    letter-spacing: 0.12em;
+    margin-bottom: 32px;
+  }
+  .b-behave h3 {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(36px, 4.4vw, 64px);
+    line-height: 0.96;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    margin: 0 0 28px;
+  }
+  .b-behave h3 .accent { color: var(--forest); }
+  .b-behave p {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 36ch;
+    margin: 0;
+  }
+  @media (max-width: 900px) {
+    .b-behave-rows { grid-template-columns: 1fr; }
+    .b-behave { border-right: 0 !important; padding: 36px 0 !important; border-bottom: 1px solid var(--rule); }
+    .b-behave:last-child { border-bottom: 0; }
+  }
+
+  /* Practice grid — numbered cards */
+  .b-practices {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+  .b-practice {
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 40px 36px;
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 24px;
+    align-items: start;
+    transition: background 0.18s ease;
+    color: var(--ink);
+  }
+  .b-practice:hover { background: #161915; }
+  .b-practice:hover .b-arr { transform: translate(4px, -4px); color: var(--forest); }
+  .b-practice .num {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--forest);
+    letter-spacing: 0.06em;
+    padding-top: 4px;
+  }
+  .b-practice h3 {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--ink);
+    margin: 0 0 10px;
+  }
+  .b-practice p { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; max-width: 36ch; }
+  .b-practice .tags { font-family: var(--font-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  .b-arr {
+    width: 22px;
+    height: 22px;
+    color: var(--ink-2);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+  @media (max-width: 720px) {
+    .b-practices { grid-template-columns: 1fr; }
+    .b-practice { grid-template-columns: 40px 1fr; }
+    .b-arr { display: none; }
+  }
+
+  /* Tech ticker (vertical lined columns) */
+  .b-tech {
+    padding: 96px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .tech-cols {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 56px;
+  }
+  .tech-col {
+    border-right: 1px solid var(--rule);
+    padding: 0 24px;
+  }
+  .tech-col:last-child { border-right: 0; }
+  .tech-col:first-child { padding-left: 0; }
+  .tech-col h6 {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--forest);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .tech-col ul { list-style: none; padding: 0; margin: 0; }
+  .tech-col li { padding: 12px 0; border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: baseline; }
+  .tech-col li:last-child { border-bottom: 0; }
+  .tech-col li .t { font-family: var(--font-sans); font-size: 17px; color: var(--ink); letter-spacing: -0.01em; }
+  .tech-col li .v { font-family: var(--font-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.06em; }
+  @media (max-width: 800px) {
+    .tech-cols { grid-template-columns: 1fr 1fr; }
+    .tech-col { border-right: 0; padding: 16px 0; border-bottom: 1px solid var(--rule); }
+    .tech-col:last-child { border-bottom: 0; }
+  }
+
+  /* Engagement feed */
+  .feed {
+    padding: 96px 0;
+    background: #161915;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .feed-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 64px;
+    align-items: start;
+  }
+  @media (max-width: 800px) { .feed-grid { grid-template-columns: 1fr; } }
+  .feed h2 {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(32px, 4.6vw, 56px);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    max-width: 14ch;
+  }
+  .feed h2 em { font-style: normal; color: var(--forest); }
+  .feed-list { font-family: var(--font-mono); font-size: 13px; color: var(--ink-2); }
+  .feed-row {
+    display: grid;
+    grid-template-columns: 100px 100px 1fr 80px;
+    gap: 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .feed-row:first-child { border-top: 1px solid var(--rule); }
+  .feed-row .stamp { color: var(--muted); letter-spacing: 0.04em; }
+  .feed-row .prac { color: var(--forest); letter-spacing: 0.04em; text-transform: uppercase; font-size: 11px; }
+  .feed-row .desc { font-family: var(--font-sans); font-size: 16px; color: var(--ink); letter-spacing: -0.005em; }
+  .feed-row .status { color: var(--muted); text-align: right; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .feed-row .status.live::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--forest); margin-right: 6px; vertical-align: middle; }
+  @media (max-width: 720px) { .feed-row { grid-template-columns: 1fr; gap: 4px; } .feed-row .status { text-align: left; } }
+
+  /* Quote */
+  .quote-block {
+    padding: 96px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .quote-block blockquote {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: clamp(36px, 5vw, 64px);
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+    color: var(--ink);
+    max-width: 22ch;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .quote-block blockquote em { font-style: normal; color: var(--forest); }
+  .quote-block .attr {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 40px;
+  }
+
+  /* Final CTA */
+  .b-cta {
+    padding: 120px 0;
+    border-top: 1px solid var(--rule);
+    text-align: left;
+  }
+  .b-cta h2 {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: clamp(56px, 9vw, 144px);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    max-width: 16ch;
+    margin: 0 0 40px;
+  }
+  .b-cta h2 .accent { color: var(--forest); }
+  .b-cta-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  /* Bold-specific buttons */
+  .b-btn-primary {
+    background: var(--forest);
+    color: #0E100D;
+    padding: 16px 24px;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.15s ease;
+    border: 1px solid var(--forest);
+  }
+  .b-btn-primary:hover { background: var(--forest-2); }
+  .b-btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    padding: 16px 24px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: border-color 0.15s ease;
+  }
+  .b-btn-ghost:hover { border-color: var(--forest); color: var(--forest); }
+
+  /* Mode toggle */
+  .mode-toggle { position: fixed; bottom: 20px; right: 20px; z-index: 100; background: #161915; border: 1px solid var(--forest); border-radius: 999px; padding: 4px; display: inline-flex; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+  .mode-toggle button { border: 0; background: transparent; color: var(--ink); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; padding: 8px 14px; border-radius: 999px; cursor: pointer; }
+  .mode-toggle button.active { background: var(--forest); color: #0E100D; }
+</style>
+</head>
+<body data-screen-label="home-bold">
+
+<!-- System bar -->
+<div class="system-bar">
+  <div class="system-bar-inner">
+    <div class="left">
+      <span><span class="dot"></span>deer-brook.com · v 2.0 · live</span>
+    </div>
+    <div class="ticker">
+      <div class="ticker-track">
+        <span>Innovative. Effective. Sustainable.</span>
+        <span>Higher Education · Moving Forward with Anthology Student</span>
+        <span>Deer Brook Dynamics · D365 BC + F&amp;O</span>
+        <span>Cyber Advisory · vCISO · CMMC · HIPAA</span>
+        <span>Technical · threat &amp; vulnerability management</span>
+        <span>Latest podcast: Moving Forward #4 — Ellucian Live 2026 Recap</span>
+        <span>Innovative. Effective. Sustainable.</span>
+        <span>Higher Education · Moving Forward with Anthology Student</span>
+        <span>Deer Brook Dynamics · D365 BC + F&amp;O</span>
+        <span>Cyber Advisory · vCISO · CMMC · HIPAA</span>
+        <span>Technical · threat &amp; vulnerability management</span>
+        <span>Latest podcast: Moving Forward #4 — Ellucian Live 2026 Recap</span>
+      </div>
+    </div>
+    <div class="right">
+      <span>NEW GLOUCESTER, ME</span>
+      <span>1-207-387-0396</span>
+    </div>
+  </div>
+</div>
+
+<!-- Nav -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand" aria-label="Deer Brook — home"></a>
+    <nav class="nav-links">
+      <a href="home-bold.html" class="active">Home</a>
+      <a href="practice.html">Practices</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="strategy.html">Strategy brief</a>
+    </nav>
+    <a href="contact.html" class="b-btn-primary">
+      Start
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="b-hero">
+  <div class="container b-hero-inner">
+    <span class="eyebrow">Modern technology consulting · innovative, effective, sustainable</span>
+    <h1 style="margin-top: 24px;">
+      Modernize <span class="underline">operations.</span><br />
+      <span class="accent">AI-native</span> by design.
+    </h1>
+
+    <div class="b-hero-meta">
+      <div>
+        <div class="l">Who</div>
+        <div class="v">A modern technology consulting firm. Six service practices. Senior practitioners only.</div>
+      </div>
+      <div>
+        <div class="l">For</div>
+        <div class="v">Higher education · finance &amp; ERP · cyber leadership · regulated organizations · mid-market.</div>
+      </div>
+      <div>
+        <div class="l">What we do</div>
+        <div class="v">Higher Ed, Dynamics, Cyber Advisory, and Technical Services — delivered with AI-enabled patterns.</div>
+      </div>
+      <div>
+        <div class="l">How we engage</div>
+        <div class="v">Partnerships, not transactions. Daily, weekly, or quarterly — we adapt to what you need.</div>
+      </div>
+    </div>
+
+    <div class="b-hero-actions">
+      <a href="practice.html" class="b-btn-primary">
+        Explore practices
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="contact.html" class="b-btn-ghost">Send us a paragraph</a>
+    </div>
+  </div>
+</section>
+
+<!-- Practice marquee -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item">AI &amp; Automation</span>
+    <span class="marquee-item">Higher Education</span>
+    <span class="marquee-item">Deer Brook Dynamics</span>
+    <span class="marquee-item">Cyber Advisory &amp; Professional</span>
+    <span class="marquee-item">Technical Services</span>
+    <span class="marquee-item">Data &amp; Analytics</span>
+    <span class="marquee-item">Anthology Student</span>
+    <span class="marquee-item">CMMC · HIPAA</span>
+    <span class="marquee-item">AI &amp; Automation</span>
+    <span class="marquee-item">Higher Education</span>
+    <span class="marquee-item">Deer Brook Dynamics</span>
+    <span class="marquee-item">Cyber Advisory &amp; Professional</span>
+    <span class="marquee-item">Technical Services</span>
+    <span class="marquee-item">Data &amp; Analytics</span>
+    <span class="marquee-item">Anthology Student</span>
+    <span class="marquee-item">CMMC · HIPAA</span>
+  </div>
+</div>
+
+<!-- Subhead -->
+<section class="subhead">
+  <div class="container">
+    <div class="subhead-grid">
+      <span class="eyebrow">[02] The proposition</span>
+      <div>
+        <h2>AI is not a service line. It's how we build <em>everything.</em></h2>
+        <p style="margin-top: 32px;">Most consulting firms bolt AI onto last-decade systems and call it transformation. We design operations, security, and data platforms so intelligence is native — embedded in the workflows, controls, and decisions that already run your business.</p>
+        <p>One operating philosophy. Seven practices delivered against it. A practitioner on every keyboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ethos — 4 claims -->
+<section class="ethos">
+  <div class="container">
+    <span class="eyebrow">[03] How we work</span>
+    <div class="ethos-rows" style="margin-top: 32px;">
+      <div class="ethos-row">
+        <div class="ethos-num">01</div>
+        <h3>AI sits above every practice.</h3>
+        <p>Each capability — ERP, security, analytics, higher ed — is delivered with AI-enabled design patterns from day one. Not a separate workstream, not a side project, not someone else's roadmap.</p>
+      </div>
+      <div class="ethos-row">
+        <div class="ethos-num">02</div>
+        <h3>Senior operators, not slideware.</h3>
+        <p>Our consultants are practitioners who've run finance, IT, and security functions in real organizations. The person you meet in the room is the person doing the work.</p>
+      </div>
+      <div class="ethos-row">
+        <div class="ethos-num">03</div>
+        <h3>Vendor-agnostic. In writing.</h3>
+        <p>Microsoft, AWS, CrowdStrike, Tenable, Anthology, Anthropic — we choose what fits the problem and make it work together. We don't accept vendor referral fees as a policy.</p>
+      </div>
+      <div class="ethos-row">
+        <div class="ethos-num">04</div>
+        <h3>Built for regulated complexity.</h3>
+        <p>Higher ed, government, healthcare, nonprofit, PE-backed mid-market. Where compliance is non-negotiable and shipping the wrong system costs more than shipping nothing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEHAVIORS — the three things, dark variant -->
+<section class="b-behaviors">
+  <div class="container">
+    <div class="section-head" style="margin-bottom: 56px;">
+      <div>
+        <span class="eyebrow">[03b] Three behaviors</span>
+        <h2 style="font-family: var(--font-sans); font-weight: 500; margin-top: 20px; letter-spacing: -0.025em;">How we show up.</h2>
+      </div>
+      <div>
+        <p style="font-size: 17px; color: var(--ink-2); max-width: 48ch;">Strategy without behavior is decoration. These three things are repeated, on every engagement, in every practice. Written down so they survive scale.</p>
+      </div>
+    </div>
+
+    <div class="b-behave-rows">
+      <div class="b-behave">
+        <div class="b-behave-n">01 ─</div>
+        <h3>Be <span class="accent">there.</span></h3>
+        <p>In the room. On the line. Inside the system when it matters. Senior practitioners present at the moment of decision. Presence is the precondition for everything else.</p>
+      </div>
+      <div class="b-behave">
+        <div class="b-behave-n">02 ─</div>
+        <h3>Make the <span class="accent">move.</span></h3>
+        <p>When the analysis is in and the room is waiting, we recommend. We ship. We change the configuration. Converting clarity into action is the hardest thing in consulting — that's the job.</p>
+      </div>
+      <div class="b-behave">
+        <div class="b-behave-n">03 ─</div>
+        <h3>Choose a <span class="accent">better way.</span></h3>
+        <p>The default path is rarely the best one. We push for the cleaner architecture, the more durable system, the AI-native pattern over the bolt-on — then we make it real.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Practices -->
+<section style="padding: 0;">
+  <div class="container">
+    <div class="section-head" style="padding-top: 96px; padding-bottom: 32px;">
+      <div>
+        <span class="eyebrow">[04] Capabilities</span>
+        <h2 style="font-family: var(--font-sans); font-weight: 500; margin-top: 20px; letter-spacing: -0.025em;">Six practices, one method.</h2>
+      </div>
+      <div>
+        <p style="font-size: 17px; color: var(--ink-2); max-width: 48ch;">AI &amp; Automation. Higher Education. Deer Brook Dynamics. Cyber Advisory &amp; Professional. Technical Services. Data &amp; Analytics. Each delivered by senior practitioners — partnerships, not transactions.</p>
+      </div>
+    </div>
+
+    <div class="b-practices">
+      <a href="practice.html" class="b-practice">
+        <span class="num">/01</span>
+        <div>
+          <h3>AI &amp; Automation</h3>
+          <p>Strategy, agentic workflows, model selection, governance, and the messy work of integrating intelligence into real operations.</p>
+          <div class="tags">Agents · Governance · Workflow</div>
+        </div>
+        <svg class="b-arr" viewBox="0 0 22 22" fill="none"><path d="M5 17L17 5M7 5h10v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="practice-higher-ed.html" class="b-practice">
+        <span class="num">/02</span>
+        <div>
+          <h3>Higher Education</h3>
+          <p>Transformation, organizational development, and system implementation — SIS, CRM, LMS, finance — and Moving Forward for Anthology Student customers.</p>
+          <div class="tags">SIS · CRM · LMS · Anthology</div>
+        </div>
+        <svg class="b-arr" viewBox="0 0 22 22" fill="none"><path d="M5 17L17 5M7 5h10v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="practice-dynamics.html" class="b-practice">
+        <span class="num">/03</span>
+        <div>
+          <h3>Deer Brook Dynamics</h3>
+          <p>ERP modernization &amp; cloud implementation. D365 Business Central and Finance. CRM modernization. Copilot, Power Platform, and AI-powered purchasing agents.</p>
+          <div class="tags">D365 BC · F&amp;O · Copilot · Power</div>
+        </div>
+        <svg class="b-arr" viewBox="0 0 22 22" fill="none"><path d="M5 17L17 5M7 5h10v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="practice-cyber.html" class="b-practice">
+        <span class="num">/04</span>
+        <div>
+          <h3>Cyber Advisory &amp; Professional</h3>
+          <p>vCISO services. CMMC readiness and certification preparation. HIPAA Security Risk Assessments. The advisory layer above your tooling.</p>
+          <div class="tags">vCISO · CMMC · HIPAA SRA</div>
+        </div>
+        <svg class="b-arr" viewBox="0 0 22 22" fill="none"><path d="M5 17L17 5M7 5h10v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="practice-technical.html" class="b-practice">
+        <span class="num">/05</span>
+        <div>
+          <h3>Technical Services</h3>
+          <p>Threat &amp; vulnerability management. External and internal network assessments. Cloud and Web/API security assessments — proactive.</p>
+          <div class="tags">VM · Net assess · Cloud · Web/API</div>
+        </div>
+        <svg class="b-arr" viewBox="0 0 22 22" fill="none"><path d="M5 17L17 5M7 5h10v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="practice-data.html" class="b-practice">
+        <span class="num">/06</span>
+        <div>
+          <h3>Data &amp; Analytics</h3>
+          <p>Modern data platforms — Fabric, Power BI, Snowflake. Semantic layers, governed AI access, and reports executives actually open.</p>
+          <div class="tags">Fabric · Power BI · Semantic · AI</div>
+        </div>
+        <svg class="b-arr" viewBox="0 0 22 22" fill="none"><path d="M5 17L17 5M7 5h10v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Tech ecosystem -->
+<section class="b-tech">
+  <div class="container">
+    <div class="section-head" style="margin-bottom: 0;">
+      <div>
+        <span class="eyebrow">[05] Technology ecosystem</span>
+        <h2 style="font-family: var(--font-sans); font-weight: 500; margin-top: 20px; letter-spacing: -0.025em;">Tools we know, deep.</h2>
+      </div>
+      <div>
+        <p style="font-size: 17px; color: var(--ink-2); max-width: 48ch;">Partner status across the platforms most of our clients run. We also deploy what we don't sell. The point is the right fit, not the house tool.</p>
+      </div>
+    </div>
+
+    <div class="tech-cols">
+      <div class="tech-col">
+        <h6>Higher Ed</h6>
+        <ul>
+          <li><span class="t">Anthology Student</span><span class="v">SIS/ERP</span></li>
+          <li><span class="t">Ellucian Banner</span><span class="v">SIS</span></li>
+          <li><span class="t">Moving Forward</span><span class="v">Path</span></li>
+          <li><span class="t">HigherEdBPO</span><span class="v">Partner</span></li>
+          <li><span class="t">LMS · CRM</span><span class="v">Implement.</span></li>
+        </ul>
+      </div>
+      <div class="tech-col">
+        <h6>Microsoft &amp; AI</h6>
+        <ul>
+          <li><span class="t">D365 Business Central</span><span class="v">ERP</span></li>
+          <li><span class="t">D365 Finance</span><span class="v">F&amp;O</span></li>
+          <li><span class="t">Copilot</span><span class="v">AI</span></li>
+          <li><span class="t">Power Automate</span><span class="v">Workflow</span></li>
+          <li><span class="t">Power Platform</span><span class="v">Apps</span></li>
+        </ul>
+      </div>
+      <div class="tech-col">
+        <h6>Cyber Advisory</h6>
+        <ul>
+          <li><span class="t">vCISO services</span><span class="v">Advisory</span></li>
+          <li><span class="t">CMMC</span><span class="v">Cert. prep</span></li>
+          <li><span class="t">HIPAA SRA</span><span class="v">Healthcare</span></li>
+          <li><span class="t">Risk programs</span><span class="v">Board-level</span></li>
+          <li><span class="t">Policy &amp; gov.</span><span class="v">Audit-ready</span></li>
+        </ul>
+      </div>
+      <div class="tech-col">
+        <h6>Technical</h6>
+        <ul>
+          <li><span class="t">Threat &amp; VM</span><span class="v">Proactive</span></li>
+          <li><span class="t">Network assess.</span><span class="v">Ext / Int</span></li>
+          <li><span class="t">Cloud security</span><span class="v">Assess</span></li>
+          <li><span class="t">Web/API</span><span class="v">AppSec</span></li>
+          <li><span class="t">Pen testing</span><span class="v">Engagement</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Engagement feed -->
+<section class="feed">
+  <div class="container">
+    <div class="feed-grid">
+      <div>
+        <span class="eyebrow">[06] Recent activity</span>
+        <h2 style="margin-top: 20px;">From the field. <em>Real signal</em> from the practice.</h2>
+        <p style="font-size: 15px; color: var(--ink-2); margin-top: 24px; max-width: 36ch;">Latest from Moving Forward (Anthology Student), engagement notes, and the Deer Brook blog. Updated as work ships.</p>
+      </div>
+      <div class="feed-list">
+        <div class="feed-row">
+          <span class="stamp">2026-05-08</span>
+          <span class="prac">Higher Ed · pod</span>
+          <span class="desc">Moving Forward #4 — Ellucian Live 2026 Recap published</span>
+          <span class="status live">NEW</span>
+        </div>
+        <div class="feed-row">
+          <span class="stamp">2026-05-04</span>
+          <span class="prac">Higher Ed · pod</span>
+          <span class="desc">Moving Forward #3 — Top 3 Takeaways from Ellucian Live 2026</span>
+          <span class="status">Released</span>
+        </div>
+        <div class="feed-row">
+          <span class="stamp">2026-04-16</span>
+          <span class="prac">Higher Ed · brief</span>
+          <span class="desc">What Should Institutions Do Following Anthology Student's Acquisition?</span>
+          <span class="status">Published</span>
+        </div>
+        <div class="feed-row">
+          <span class="stamp">2026-04-04</span>
+          <span class="prac">Dynamics · build</span>
+          <span class="desc">AI-powered purchasing agent · Copilot + Power Automate</span>
+          <span class="status live">LIVE</span>
+        </div>
+        <div class="feed-row">
+          <span class="stamp">2026-03-22</span>
+          <span class="prac">Cyber · advisory</span>
+          <span class="desc">vCISO retainer onboarding · financial services org</span>
+          <span class="status">Ongoing</span>
+        </div>
+        <div class="feed-row">
+          <span class="stamp">2026-03-10</span>
+          <span class="prac">Cyber · CMMC</span>
+          <span class="desc">CMMC readiness sprint · defense supplier</span>
+          <span class="status live">LIVE</span>
+        </div>
+        <div class="feed-row">
+          <span class="stamp">2026-02-28</span>
+          <span class="prac">Higher Ed · partner</span>
+          <span class="desc">HigherEdBPO joint Anthology Student offering announced</span>
+          <span class="status">Live</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Quote -->
+<section class="quote-block">
+  <div class="container">
+    <span class="eyebrow">[07] Client</span>
+    <blockquote style="margin-top: 32px;">"The Deer Brook team was <em>dedicated, responsible, and took personal accountability</em> for the results. We were able to successfully achieve the desired outcome and make tangible improvements to our security posture."</blockquote>
+    <div class="attr">Nathan Davis · VP Information Technology · Evergreen Credit Union</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="b-cta">
+  <div class="container">
+    <span class="eyebrow">[08] Start a conversation</span>
+    <h2 style="margin-top: 24px;">Bring us <span class="accent">a real problem.</span></h2>
+    <p style="font-size: 19px; color: var(--ink-2); max-width: 56ch; margin-bottom: 40px;">No discovery decks. No boilerplate qualifying questionnaires. A senior practitioner reads what you send and replies within two business days, including whether this is a fit.</p>
+    <div class="b-cta-actions">
+      <a href="contact.html" class="b-btn-primary">
+        Send a paragraph
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="home.html" class="b-btn-ghost">View editorial direction</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer" style="background: #0E100D;">
+  <div class="container">
+    <div class="footer-meta">
+      <div class="footer-brand">
+        <a href="index.html" class="brand" aria-label="Deer Brook — home"></a>
+        <p class="muted" style="font-size: 14px; max-width: 36ch; margin-top: 16px;">Innovative, effective, sustainable. Modern technology consulting helping organizations modernize through partnerships, not transactions.</p>
+        <p class="mono" style="margin-top: 18px;">49 Pineland Drive<br />New Gloucester, ME 04260</p>
+        <p class="mono" style="margin-top: 6px;"><a href="tel:+12073870396" style="border-bottom: 1px solid var(--rule);">1-207-387-0396</a></p>
+        <div style="display: flex; gap: 14px; margin-top: 18px;" class="mono">
+          <a href="https://www.linkedin.com/company/deerbrookcyber" target="_blank" rel="noopener" style="border-bottom: 1px solid var(--rule);">LinkedIn</a>
+          <a href="https://www.facebook.com/deerbrookcyber" target="_blank" rel="noopener" style="border-bottom: 1px solid var(--rule);">Facebook</a>
+          <a href="https://www.youtube.com/@deerbrookcyber" target="_blank" rel="noopener" style="border-bottom: 1px solid var(--rule);">YouTube</a>
+        </div>
+      </div>
+      <div class="footer-actions">
+        <h6>Company</h6>
+        <ul>
+          <li><a href="about.html">Who are we?</a></li>
+          <li><a href="about.html#careers">Careers</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="strategy.html">Brand &amp; strategy</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+        <h6 style="margin-top: 22px;">Insights</h6>
+        <ul>
+          <li><a href="#">Field notes</a></li>
+          <li><a href="#">Moving Forward podcast</a></li>
+          <li><a href="#">Resources &amp; articles</a></li>
+        </ul>
+      </div>
+      <div class="footer-newsletter" id="brook-signup">
+        <span class="eyebrow">Weekly · The Brook</span>
+        <h5>Field notes for CIOs &amp; CFOs.</h5>
+        <p>Practical, technical, vendor-free. One short briefing on what we're learning across engagements — sent Sundays.</p>
+        <form onsubmit="event.preventDefault(); this.closest('.footer-newsletter').classList.add('subscribed'); this.querySelector('button').textContent='Subscribed \u2713';">
+          <input type="email" required placeholder="you@company.com" aria-label="Email address" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="meta">One email a week · unsubscribe in one click</div>
+      </div>
+    </div>
+
+    <div class="footer-services six">
+      <div class="footer-svc">
+        <h6><a href="practice.html">AI &amp; Automation →</a></h6>
+        <ul>
+          <li><a href="practice.html">AI Readiness Sprint</a></li>
+          <li><a href="practice.html">Embedded AI Build</a></li>
+          <li><a href="practice.html">AI Operating Partner</a></li>
+          <li><a href="practice.html">AI Policy &amp; Governance</a></li>
+          <li><a href="practice.html">Agentic workflows</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-higher-ed.html">Higher Education →</a></h6>
+        <ul>
+          <li><a href="practice-higher-ed.html">Transformation Services</a></li>
+          <li><a href="practice-higher-ed.html">Organizational Development</a></li>
+          <li><a href="practice-higher-ed.html">System Implementation</a></li>
+          <li><a href="practice-higher-ed.html">SIS · CRM · LMS</a></li>
+          <li><a href="practice-higher-ed.html">Moving Forward with Anthology</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-dynamics.html">Deer Brook Dynamics →</a></h6>
+        <ul>
+          <li><a href="practice-dynamics.html">ERP Modernization &amp; Cloud</a></li>
+          <li><a href="practice-dynamics.html">D365 Business Central</a></li>
+          <li><a href="practice-dynamics.html">D365 Finance &amp; Ops</a></li>
+          <li><a href="practice-dynamics.html">CRM Modernization</a></li>
+          <li><a href="practice-dynamics.html">Copilot &amp; Power Platform</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-cyber.html">Cyber Advisory →</a></h6>
+        <ul>
+          <li><a href="practice-cyber.html">vCISO Services</a></li>
+          <li><a href="practice-cyber.html">CMMC Services</a></li>
+          <li><a href="practice-cyber.html">HIPAA Security Risk Assessments</a></li>
+          <li><a href="practice-cyber.html">Governance · Risk · Compliance</a></li>
+          <li><a href="practice-cyber.html">Policy &amp; board reporting</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-technical.html">Technical Services →</a></h6>
+        <ul>
+          <li><a href="practice-technical.html">Threat &amp; Vulnerability Mgmt</a></li>
+          <li><a href="practice-technical.html">External Network Assessments</a></li>
+          <li><a href="practice-technical.html">Internal Network Assessments</a></li>
+          <li><a href="practice-technical.html">Cloud Security Assessments</a></li>
+          <li><a href="practice-technical.html">Web / API Security Assessments</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-data.html">Data &amp; Analytics →</a></h6>
+        <ul>
+          <li><a href="practice-data.html">Microsoft Fabric &amp; Power BI</a></li>
+          <li><a href="practice-data.html">Data warehouse modernization</a></li>
+          <li><a href="practice-data.html">Semantic layer &amp; governance</a></li>
+          <li><a href="practice-data.html">Governed AI access</a></li>
+          <li><a href="practice-data.html">Executive reporting</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-legal">
+      <span>© 2026 Deer Brook Consulting LLC · All rights reserved</span>
+      <span>Privacy · Terms · Accessibility</span>
+    </div>
+  </div>
+</footer>
+
+<div class="mode-toggle" role="group" aria-label="Visual direction">
+  <button id="modeEditorial">Editorial</button>
+  <button id="modeBold" class="active">Bold</button>
+</div>
+
+<script src="brand.js"></script>
+<script>
+  // Mode toggle navigates between pages
+  document.getElementById('modeEditorial').addEventListener('click', () => {
+    localStorage.setItem('db-mode', 'editorial');
+    window.location.href = 'home.html';
+  });
+  document.getElementById('modeBold').addEventListener('click', () => {
+    localStorage.setItem('db-mode', 'bold');
+  });
+  document.querySelectorAll('section').forEach(el => el.classList.add('reveal'));
+</script>
+</body>
+</html>

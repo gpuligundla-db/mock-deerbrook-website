@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="en" data-mode="editorial">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Higher Education — Deer Brook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="brand.css" />
+<style>
+  /* Practice nav (left sticky) */
+  .practice-shell {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 64px;
+    padding-top: 56px;
+  }
+  @media (max-width: 960px) { .practice-shell { grid-template-columns: 1fr; gap: 24px; } }
+  .practice-nav {
+    position: sticky;
+    top: 96px;
+    align-self: start;
+    border-left: 1px solid var(--rule);
+    padding-left: 20px;
+  }
+  .practice-nav .label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  .practice-nav ul { list-style: none; margin: 0; padding: 0; }
+  .practice-nav li { margin-bottom: 8px; }
+  .practice-nav a {
+    display: block;
+    padding: 6px 0;
+    font-size: 14px;
+    color: var(--ink-2);
+    transition: color 0.15s ease, padding 0.15s ease;
+    border-bottom: 1px dashed transparent;
+  }
+  .practice-nav a:hover { color: var(--ink); padding-left: 6px; }
+  .practice-nav a.active { color: var(--ink); border-bottom-color: var(--ink); }
+  @media (max-width: 960px) {
+    .practice-nav { position: static; border-left: 0; padding-left: 0; }
+    .practice-nav ul { display: flex; flex-wrap: wrap; gap: 4px; }
+    .practice-nav li { margin: 0; }
+    .practice-nav a { padding: 6px 12px; border: 1px solid var(--rule); border-radius: 999px; }
+  }
+
+  /* Practice hero */
+  .p-hero {
+    padding: 8px 0 64px;
+  }
+  .p-hero h1 { font-size: clamp(48px, 6vw, 80px); max-width: 14ch; letter-spacing: -0.02em; }
+  .p-hero h1 em { color: var(--forest); font-style: italic; font-weight: 300; }
+  .p-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+  }
+  @media (max-width: 720px) { .p-meta { grid-template-columns: 1fr; gap: 18px; } }
+  .p-meta .label { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  .p-meta .val { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.01em; }
+
+  /* Three offer cards */
+  .offers {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+  }
+  .offer {
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
+  }
+  .offer .duration { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .offer h3 { font-family: var(--font-display); font-weight: 400; font-size: 32px; letter-spacing: -0.015em; margin: 20px 0 14px; line-height: 1.1; }
+  .offer p { font-size: 15px; color: var(--ink-2); margin: 0 0 24px; }
+  .offer ul { list-style: none; padding: 0; margin: 0 0 24px; font-size: 13px; }
+  .offer ul li { padding: 6px 0; border-bottom: 1px dashed var(--rule); font-family: var(--font-mono); color: var(--ink-2); }
+  .offer .price { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: end; }
+  .offer .price .amt { font-family: var(--font-display); font-size: 22px; letter-spacing: -0.01em; }
+  .offer .price .unit { font-family: var(--font-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  @media (max-width: 960px) { .offers { grid-template-columns: 1fr; } }
+
+  /* Process steps */
+  .process {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 40px;
+    counter-reset: step;
+  }
+  .step {
+    border-right: 1px solid var(--rule);
+    padding: 28px 28px 28px 0;
+    counter-increment: step;
+  }
+  .step:last-child { border-right: 0; }
+  .step:not(:first-child) { padding-left: 28px; }
+  .step .step-n {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--forest);
+    letter-spacing: 0.12em;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  .step h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 24px;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .step p { font-size: 14px; color: var(--ink-2); margin: 0; }
+  @media (max-width: 960px) { .process { grid-template-columns: 1fr 1fr; } .step:nth-child(even) { border-right: 0; } }
+  @media (max-width: 560px) { .process { grid-template-columns: 1fr; } .step { border-right: 0 !important; padding-left: 0 !important; padding-right: 0; border-bottom: 1px solid var(--rule); } .step:last-child { border-bottom: 0; } }
+
+  /* Case study card */
+  .case {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  @media (max-width: 800px) { .case { grid-template-columns: 1fr; } }
+  .case-img { min-height: 320px; border-right: 1px solid var(--rule); border-radius: 0; }
+  .case-text { padding: 40px; }
+  .case-text h3 { font-family: var(--font-display); font-size: 32px; letter-spacing: -0.015em; line-height: 1.1; margin: 16px 0 16px; }
+  .case-text p { color: var(--ink-2); max-width: 56ch; }
+  .case-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+  .case-stats > div { padding-right: 18px; border-right: 1px solid var(--rule); }
+  .case-stats > div:last-child { border-right: 0; padding-left: 18px; padding-right: 0; }
+  .case-stats > div:not(:first-child):not(:last-child) { padding-left: 18px; }
+  .case-stats .k { font-family: var(--font-display); font-size: 32px; letter-spacing: -0.02em; }
+  .case-stats .v { font-family: var(--font-mono); font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 6px; }
+
+  /* FAQ accordion */
+  .faq { border-top: 1px solid var(--ink); margin-top: 32px; }
+  .faq-item { border-bottom: 1px solid var(--rule); }
+  .faq-q {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    text-align: left;
+    padding: 22px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+  .faq-q .plus { font-family: var(--font-mono); font-size: 18px; color: var(--muted); transition: transform 0.2s ease; }
+  .faq-item.open .plus { transform: rotate(45deg); color: var(--forest); }
+  .faq-a {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    color: var(--ink-2);
+    font-size: 15px;
+    max-width: 64ch;
+  }
+  .faq-item.open .faq-a { max-height: 400px; padding: 0 0 24px; }
+
+  /* Stack list */
+  .stack {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-top: 40px;
+  }
+  @media (max-width: 720px) { .stack { grid-template-columns: 1fr 1fr; } }
+  .stack-col h6 { font-family: var(--font-mono); font-size: 11px; color: var(--forest); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+  .stack-col ul { list-style: none; padding: 0; margin: 0; }
+  .stack-col li { padding: 8px 0; border-bottom: 1px dashed var(--rule); font-size: 14px; color: var(--ink-2); }
+
+  /* Related practices */
+  .related {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 32px;
+  }
+  @media (max-width: 800px) { .related { grid-template-columns: 1fr; } }
+  .related-card {
+    padding: 24px;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color 0.18s ease;
+  }
+  .related-card:hover { border-color: var(--ink); }
+  .related-card h5 { font-family: var(--font-display); font-weight: 400; font-size: 22px; letter-spacing: -0.01em; }
+  .related-card p { font-size: 13px; color: var(--ink-2); margin: 0; }
+  .related-card .arr { margin-top: auto; padding-top: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* Mode toggle (shared) */
+  .mode-toggle { position: fixed; bottom: 20px; right: 20px; z-index: 100; background: var(--paper); border: 1px solid var(--ink); border-radius: 999px; padding: 4px; display: inline-flex; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .mode-toggle button { border: 0; background: transparent; color: var(--ink); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; padding: 8px 14px; border-radius: 999px; cursor: pointer; }
+  .mode-toggle button.active { background: var(--ink); color: var(--paper); }
+  [data-mode="bold"] .mode-toggle { background: var(--paper-2); border-color: var(--forest); }
+  [data-mode="bold"] .mode-toggle button.active { background: var(--forest); color: #0E100D; }
+</style>
+</head>
+<body data-screen-label="practice-higher-ed">
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand" aria-label="Deer Brook — home"></a>
+    <nav class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="practice.html" class="active">Practices</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="strategy.html">Strategy brief</a>
+    </nav>
+    <a href="contact.html" class="btn btn-primary">
+      Start a conversation
+      <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</header>
+
+<!-- Breadcrumb -->
+<div class="container" style="padding-top: 24px;">
+  <div class="mono">
+    <a href="home.html" style="color: var(--muted);">Home</a> <span style="margin: 0 8px;">/</span>
+    <a href="practice.html" style="color: var(--muted);">Practices</a> <span style="margin: 0 8px;">/</span>
+    <span style="color: var(--ink);">Higher Education</span>
+  </div>
+</div>
+
+<div class="container">
+  <div class="practice-shell">
+    <!-- Left nav -->
+    <aside class="practice-nav">
+      <div class="label">All practices</div>
+      <ul>
+        <li><a href="practice.html">AI &amp; Automation</a></li>
+        <li><a href="practice-higher-ed.html" class="active">Higher Education</a></li>
+        <li><a href="practice-dynamics.html">Deer Brook Dynamics</a></li>
+        <li><a href="practice-cyber.html">Cyber Advisory &amp; Professional</a></li>
+        <li><a href="practice-technical.html">Technical Services</a></li>
+        <li><a href="practice-data.html">Data &amp; Analytics</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main -->
+    <main>
+      <section class="p-hero" style="padding-top: 0;">
+        <span class="eyebrow">Practice · Higher Education</span>
+        <h1 style="margin-top: 24px;">We <em>know</em> higher education.</h1>
+        <p class="lead" style="margin-top: 28px;">Transformation, organizational development, and system implementation for colleges and universities. We move alongside your team — through SIS, CRM, LMS, finance, and the Anthology Student path forward.</p>
+
+        <div class="p-meta">
+          <div>
+            <div class="label">Practice lead</div>
+            <div class="val">Higher Education Partner</div>
+            <div class="mono" style="margin-top: 4px;">Operators from inside higher-ed IT &amp; ops</div>
+          </div>
+          <div>
+            <div class="label">Engagements</div>
+            <div class="val">Multi-year engagements active</div>
+            <div class="mono" style="margin-top: 4px;">across institutions</div>
+          </div>
+          <div>
+            <div class="label">Typical engagement</div>
+            <div class="val">3–18 months</div>
+            <div class="mono" style="margin-top: 4px;">sequenced around the academic calendar</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Offer cards -->
+      <section class="compact" style="padding-top: 0;">
+        <div class="section-head" style="margin-bottom: 32px;">
+          <div>
+            <span class="eyebrow">How we engage</span>
+            <h2 style="margin-top: 20px; font-size: clamp(36px, 4.5vw, 48px);">Three ways in.</h2>
+          </div>
+          <div>
+            <p class="lead">Each one is a complete engagement. Start narrow. Expand when something works. We won't sell you a 30-week roadmap on a first call.</p>
+          </div>
+        </div>
+
+        <div class="offers">
+          <div class="offer">
+            <span class="duration">Engagement A · 4–8 weeks</span>
+            <h3>Transformation Services</h3>
+            <p>Planning, implementation oversight, and finance-system integration for institutions starting or stabilizing a major systems change. We sit between the SIS, registrar, finance, and IT — and translate.</p>
+            <ul>
+              <li>Planning &amp; sequencing</li>
+              <li>Implementation oversight</li>
+              <li>Finance system integration</li>
+              <li>Steering committee facilitation</li>
+              <li>Risk &amp; dependency tracking</li>
+            </ul>
+            <div class="price">
+              <div><div class="amt">Fixed scope</div><div class="unit">flat fee · single billable</div></div>
+              <a href="contact.html" class="btn btn-link">Scope →</a>
+            </div>
+          </div>
+          <div class="offer" style="background: var(--paper-2);">
+            <span class="duration" style="color: var(--forest);">Engagement B · 3–6 months · most common</span>
+            <h3>Organizational Development</h3>
+            <p>Change management for institutions in the middle of a system transition. We work with cabinets, deans, registrars, and finance leadership to align humans before software. The point is adoption, not training.</p>
+            <ul>
+              <li>Stakeholder alignment</li>
+              <li>Process redesign</li>
+              <li>Role &amp; ownership maps</li>
+              <li>Training program design</li>
+              <li>Communications cadence</li>
+            </ul>
+            <div class="price">
+              <div><div class="amt">Milestone-billed</div><div class="unit">4 milestones · weekly demo</div></div>
+              <a href="contact.html" class="btn btn-link">Scope →</a>
+            </div>
+          </div>
+          <div class="offer">
+            <span class="duration">Engagement C · scope-shaped</span>
+            <h3>System Implementation</h3>
+            <p>SIS, CRM, and LMS implementation — end-to-end, from procurement support through go-live and the first registration cycle. Including the Moving Forward path for Anthology Student customers.</p>
+            <ul>
+              <li>SIS implementation</li>
+              <li>CRM implementation</li>
+              <li>LMS configuration</li>
+              <li>Anthology Student migration</li>
+              <li>Post-go-live stabilization</li>
+            </ul>
+            <div class="price">
+              <div><div class="amt">Scope-shaped</div><div class="unit">aligned to academic calendar</div></div>
+              <a href="contact.html" class="btn btn-link">Scope →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Process -->
+      <section class="compact">
+        <div class="section-head" style="margin-bottom: 24px;">
+          <div>
+            <span class="eyebrow">How we work</span>
+            <h2 style="margin-top: 20px; font-size: clamp(36px, 4.5vw, 48px);">A working method, not a methodology deck.</h2>
+          </div>
+          <div>
+            <p class="lead">We've shipped enough of these to know what gets stuck where. The point is not to follow a process — the point is to ship something your team can run after we leave.</p>
+          </div>
+        </div>
+
+        <div class="process">
+          <div class="step">
+            <div class="step-n">Step 01</div>
+            <h4>Meet you where you are.</h4>
+            <p>We start with the institutional context — academic calendar, governance, accreditation cycle, last three failed projects. We don't bring a deck. We listen for a week.</p>
+          </div>
+          <div class="step">
+            <div class="step-n">Step 02</div>
+            <h4>Map the systems and the people.</h4>
+            <p>SIS, CRM, LMS, finance, advancement. The integrations between them. And just as important — who owns each, who broke each, and who knows where the bodies are buried.</p>
+          </div>
+          <div class="step">
+            <div class="step-n">Step 03</div>
+            <h4>Sequence the moves.</h4>
+            <p>A realistic plan that respects the academic calendar. Things ship between cycles, not during registration. Risks are visible. Dependencies are documented.</p>
+          </div>
+          <div class="step">
+            <div class="step-n">Step 04</div>
+            <h4>Stay through the first cycle.</h4>
+            <p>We don't hand off at go-live. We stay through the first registration, the first census, the first end-of-term. That's when systems are actually tested.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Case study -->
+      <section class="compact">
+        <div class="section-head" style="margin-bottom: 24px;">
+          <div>
+            <span class="eyebrow">A recent engagement</span>
+            <h2 style="margin-top: 20px; font-size: clamp(36px, 4.5vw, 48px);">A mid-Atlantic university system.</h2>
+          </div>
+          <div>
+            <p class="lead">A multi-campus university system in active Anthology Student migration. New leadership. An academic calendar that wouldn't pause for technology.</p>
+          </div>
+        </div>
+
+        <div class="case">
+          <div class="placeholder-img case-img">[ engagement · multi-campus systems transformation ]</div>
+          <div class="case-text">
+            <span class="eyebrow">Engagement · multi-year · transformation + implementation</span>
+            <h3>A multi-year transformation, sequenced around the academic calendar.</h3>
+            <p>We embedded across IT, registrar, and finance for the duration of the migration. We sequenced the Anthology Student work around the academic calendar, rebuilt the data integration layer between SIS, CRM, and finance, and helped the institution write its first formal AI usage policy.</p>
+            <div class="case-stats">
+              <div><div class="k">0</div><div class="v">missed academic-calendar milestones</div></div>
+              <div><div class="k">3,400+</div><div class="v">student records reconciled in week 1</div></div>
+              <div><div class="k">Multi-yr</div><div class="v">sustained partnership</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stack we work in -->
+      <section class="compact">
+        <div class="section-head" style="margin-bottom: 16px;">
+          <div>
+            <span class="eyebrow">The stack we work in</span>
+            <h2 style="margin-top: 20px; font-size: clamp(36px, 4.5vw, 48px);">Vendor-agnostic, opinion-rich.</h2>
+          </div>
+          <div>
+            <p class="lead">We hold strong opinions about which tools fit which problems. We hold no opinion about which vendor pays a referral fee — we don't take them.</p>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="stack-col">
+            <h6>SIS &amp; ERP</h6>
+            <ul>
+              <li>Anthology Student</li>
+              <li>Ellucian Banner</li>
+              <li>Workday Student</li>
+              <li>PeopleSoft Campus</li>
+              <li>Custom legacy SIS</li>
+            </ul>
+          </div>
+          <div class="stack-col">
+            <h6>CRM &amp; LMS</h6>
+            <ul>
+              <li>Salesforce Education</li>
+              <li>Slate</li>
+              <li>Anthology Reach</li>
+              <li>Canvas LMS</li>
+              <li>Blackboard / Anthology</li>
+            </ul>
+          </div>
+          <div class="stack-col">
+            <h6>Finance &amp; data</h6>
+            <ul>
+              <li>D365 Finance</li>
+              <li>Workday Finance</li>
+              <li>Microsoft Fabric</li>
+              <li>Power BI</li>
+              <li>Custom data warehouses</li>
+            </ul>
+          </div>
+          <div class="stack-col">
+            <h6>Governance &amp; policy</h6>
+            <ul>
+              <li>GLBA readiness</li>
+              <li>FERPA review</li>
+              <li>AI usage policy template</li>
+              <li>Accreditation evidence</li>
+              <li>Board reporting</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="compact">
+        <div class="section-head" style="margin-bottom: 0;">
+          <div>
+            <span class="eyebrow">Questions we get</span>
+            <h2 style="margin-top: 20px; font-size: clamp(36px, 4.5vw, 48px);">What clients ask in the first call.</h2>
+          </div>
+          <div>
+            <p class="lead">If you have a different question, we'd rather hear it directly. The form on Contact reaches a partner, not a bot.</p>
+          </div>
+        </div>
+
+        <div class="faq">
+          <div class="faq-item">
+            <button class="faq-q">Are you an Anthology partner? <span class="plus">+</span></button>
+            <div class="faq-a">Yes — and it's the focus of our podcast, "Moving Forward with Anthology Student &amp; Finance Solutions." We work with institutions evaluating their options, mid-implementation, or stabilizing after go-live. Our partnership with HigherEdBPO extends the offering for institutions that need a one-stop solution.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Do you work with non-Anthology institutions? <span class="plus">+</span></button>
+            <div class="faq-a">Yes. We work across Ellucian Banner, Workday Student, PeopleSoft Campus, and bespoke stacks. Higher education is a vertical for us — not a single-vendor practice.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">How do you handle the academic calendar? <span class="plus">+</span></button>
+            <div class="faq-a">It shapes the engagement plan from day one. We do not ship system changes during registration, census, or end-of-term. We sequence around the calendar; we don't pretend it isn't there.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Can you help with our institutional AI policy? <span class="plus">+</span></button>
+            <div class="faq-a">Yes. Our higher-ed AI policy template addresses model selection, FERPA-bound data handling, faculty use, student-facing systems, and accreditation reporting. It's drafted to be signable by a CIO and approvable by a faculty senate.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Will you stay through go-live and after? <span class="plus">+</span></button>
+            <div class="faq-a">Yes. Standard practice. Go-live is when systems are tested in production for the first time — leaving then is malpractice. We stay through the first registration cycle minimum.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">What does Moving Forward actually mean for our institution? <span class="plus">+</span></button>
+            <div class="faq-a">It depends on where you are. We have specific playbooks for institutions in active Anthology Student implementation, mid-stabilization, evaluating alternatives, or moving from Anthology Student to a different SIS. Tell us where you are; we'll send the right one.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Related -->
+      <section class="compact">
+        <span class="eyebrow">Often paired with</span>
+        <h2 style="margin-top: 16px; font-size: clamp(28px, 3vw, 40px);">Where this practice connects.</h2>
+        <div class="related">
+          <a href="practice-dynamics.html" class="related-card">
+            <h5>Deer Brook Dynamics</h5>
+            <p>Finance modernization frequently pairs with Higher Ed transformation. D365 BC + Finance for institutional finance.</p>
+            <span class="arr">View practice →</span>
+          </a>
+          <a href="practice-cyber.html" class="related-card">
+            <h5>Cyber Advisory &amp; Professional</h5>
+            <p>GLBA, FERPA, and the higher-ed risk register. Policy, governance, and board-level reporting.</p>
+            <span class="arr">View practice →</span>
+          </a>
+          <a href="practice.html" class="related-card">
+            <h5>AI &amp; Automation</h5>
+            <p>AI policy, AI-enabled advising assistants, and AI in administrative workflows.</p>
+            <span class="arr">View practice →</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Closing CTA -->
+      <section class="compact" style="margin-bottom: 32px;">
+        <div style="border: 1px solid var(--ink); border-radius: var(--radius-lg); padding: 48px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: end;">
+          <div>
+            <span class="eyebrow">Start here</span>
+            <h2 style="margin-top: 16px; font-size: clamp(32px, 4vw, 48px);">Send us a paragraph.</h2>
+            <p class="lead muted" style="margin-top: 16px;">Describe the workflow. We'll reply with whether this is a fit, two questions, and a recommended starting engagement. From a partner. Within two business days.</p>
+          </div>
+          <div>
+            <a href="contact.html" class="btn btn-primary">
+              Email a partner
+              <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<!-- FOOTER (shared shape) -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-meta">
+      <div class="footer-brand">
+        <a href="index.html" class="brand" aria-label="Deer Brook — home"></a>
+        <p class="muted" style="font-size: 14px; max-width: 36ch; margin-top: 16px;">Innovative, effective, sustainable. Modern technology consulting helping organizations modernize through partnerships, not transactions.</p>
+        <p class="mono" style="margin-top: 18px;">49 Pineland Drive<br />New Gloucester, ME 04260</p>
+        <p class="mono" style="margin-top: 6px;"><a href="tel:+12073870396" style="border-bottom: 1px solid var(--rule);">1-207-387-0396</a></p>
+        <div style="display: flex; gap: 14px; margin-top: 18px;" class="mono">
+          <a href="https://www.linkedin.com/company/deerbrookcyber" target="_blank" rel="noopener" style="border-bottom: 1px solid var(--rule);">LinkedIn</a>
+          <a href="https://www.facebook.com/deerbrookcyber" target="_blank" rel="noopener" style="border-bottom: 1px solid var(--rule);">Facebook</a>
+          <a href="https://www.youtube.com/@deerbrookcyber" target="_blank" rel="noopener" style="border-bottom: 1px solid var(--rule);">YouTube</a>
+        </div>
+      </div>
+      <div class="footer-actions">
+        <h6>Company</h6>
+        <ul>
+          <li><a href="about.html">Who are we?</a></li>
+          <li><a href="about.html#careers">Careers</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="strategy.html">Brand &amp; strategy</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+        <h6 style="margin-top: 22px;">Insights</h6>
+        <ul>
+          <li><a href="#">Field notes</a></li>
+          <li><a href="#">Moving Forward podcast</a></li>
+          <li><a href="#">Resources &amp; articles</a></li>
+        </ul>
+      </div>
+      <div class="footer-newsletter" id="brook-signup">
+        <span class="eyebrow">Weekly · The Brook</span>
+        <h5>Field notes for CIOs &amp; CFOs.</h5>
+        <p>Practical, technical, vendor-free. One short briefing on what we're learning across engagements — sent Sundays.</p>
+        <form onsubmit="event.preventDefault(); this.closest('.footer-newsletter').classList.add('subscribed'); this.querySelector('button').textContent='Subscribed \u2713';">
+          <input type="email" required placeholder="you@company.com" aria-label="Email address" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="meta">One email a week · unsubscribe in one click</div>
+      </div>
+    </div>
+
+    <div class="footer-services six">
+      <div class="footer-svc">
+        <h6><a href="practice.html">AI &amp; Automation →</a></h6>
+        <ul>
+          <li><a href="practice.html">AI Readiness Sprint</a></li>
+          <li><a href="practice.html">Embedded AI Build</a></li>
+          <li><a href="practice.html">AI Operating Partner</a></li>
+          <li><a href="practice.html">AI Policy &amp; Governance</a></li>
+          <li><a href="practice.html">Agentic workflows</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-higher-ed.html">Higher Education →</a></h6>
+        <ul>
+          <li><a href="practice-higher-ed.html">Transformation Services</a></li>
+          <li><a href="practice-higher-ed.html">Organizational Development</a></li>
+          <li><a href="practice-higher-ed.html">System Implementation</a></li>
+          <li><a href="practice-higher-ed.html">SIS · CRM · LMS</a></li>
+          <li><a href="practice-higher-ed.html">Moving Forward with Anthology</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-dynamics.html">Deer Brook Dynamics →</a></h6>
+        <ul>
+          <li><a href="practice-dynamics.html">ERP Modernization &amp; Cloud</a></li>
+          <li><a href="practice-dynamics.html">D365 Business Central</a></li>
+          <li><a href="practice-dynamics.html">D365 Finance &amp; Ops</a></li>
+          <li><a href="practice-dynamics.html">CRM Modernization</a></li>
+          <li><a href="practice-dynamics.html">Copilot &amp; Power Platform</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-cyber.html">Cyber Advisory →</a></h6>
+        <ul>
+          <li><a href="practice-cyber.html">vCISO Services</a></li>
+          <li><a href="practice-cyber.html">CMMC Services</a></li>
+          <li><a href="practice-cyber.html">HIPAA Security Risk Assessments</a></li>
+          <li><a href="practice-cyber.html">Governance · Risk · Compliance</a></li>
+          <li><a href="practice-cyber.html">Policy &amp; board reporting</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-technical.html">Technical Services →</a></h6>
+        <ul>
+          <li><a href="practice-technical.html">Threat &amp; Vulnerability Mgmt</a></li>
+          <li><a href="practice-technical.html">External Network Assessments</a></li>
+          <li><a href="practice-technical.html">Internal Network Assessments</a></li>
+          <li><a href="practice-technical.html">Cloud Security Assessments</a></li>
+          <li><a href="practice-technical.html">Web / API Security Assessments</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-data.html">Data &amp; Analytics →</a></h6>
+        <ul>
+          <li><a href="practice-data.html">Microsoft Fabric &amp; Power BI</a></li>
+          <li><a href="practice-data.html">Data warehouse modernization</a></li>
+          <li><a href="practice-data.html">Semantic layer &amp; governance</a></li>
+          <li><a href="practice-data.html">Governed AI access</a></li>
+          <li><a href="practice-data.html">Executive reporting</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-legal">
+      <span>© 2026 Deer Brook Consulting LLC · All rights reserved</span>
+      <span>Privacy · Terms · Accessibility</span>
+    </div>
+  </div>
+</footer>
+
+<div class="mode-toggle" role="group" aria-label="Visual direction">
+  <button id="modeEditorial" class="active">Editorial</button>
+  <button id="modeBold">Bold</button>
+</div>
+
+<script src="brand.js"></script>
+<script>
+  const root = document.documentElement;
+  const editBtn = document.getElementById('modeEditorial');
+  const boldBtn = document.getElementById('modeBold');
+  function applyMode(m) {
+    root.setAttribute('data-mode', m);
+    editBtn.classList.toggle('active', m === 'editorial');
+    boldBtn.classList.toggle('active', m === 'bold');
+    localStorage.setItem('db-mode', m);
+  }
+  editBtn.addEventListener('click', () => applyMode('editorial'));
+  boldBtn.addEventListener('click', () => applyMode('bold'));
+  applyMode(localStorage.getItem('db-mode') || 'editorial');
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach((q) => {
+    q.addEventListener('click', () => q.closest('.faq-item').classList.toggle('open'));
+  });
+
+  // Reveal anim
+  document.querySelectorAll('section, .offer, .step, .stack-col').forEach(el => el.classList.add('reveal'));
+</script>
+</body>
+</html>

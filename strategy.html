@@ -1,0 +1,903 @@
+<!doctype html>
+<html lang="en" data-mode="editorial">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Deer Brook — Brand &amp; site strategy brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="brand.css" />
+<style>
+  body { background: var(--paper); }
+
+  /* Cover */
+  .cover {
+    padding: 96px 0 80px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .cover-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    padding-top: 40px;
+    border-top: 1px solid var(--rule);
+    margin-top: 56px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .cover-meta .v { font-family: var(--font-display); font-size: 18px; letter-spacing: -0.01em; text-transform: none; color: var(--ink); margin-top: 6px; }
+  @media (max-width: 720px) { .cover-meta { grid-template-columns: 1fr 1fr; gap: 18px; } }
+
+  .cover h1 {
+    font-size: clamp(48px, 6.4vw, 96px);
+    line-height: 0.98;
+    max-width: 16ch;
+  }
+  .cover h1 em { color: var(--forest); font-style: italic; font-weight: 300; }
+  .cover .lead { font-size: 22px; max-width: 64ch; margin-top: 28px; }
+
+  /* Doc body */
+  .doc-shell {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 80px;
+    padding: 64px 0 96px;
+  }
+  @media (max-width: 960px) { .doc-shell { grid-template-columns: 1fr; gap: 24px; } }
+  .doc-toc {
+    position: sticky;
+    top: 96px;
+    align-self: start;
+    padding-left: 20px;
+    border-left: 1px solid var(--rule);
+  }
+  .doc-toc .label { font-family: var(--font-mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+  .doc-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: t; }
+  .doc-toc li { counter-increment: t; margin-bottom: 12px; }
+  .doc-toc a {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.35;
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    transition: color 0.15s ease;
+  }
+  .doc-toc a::before {
+    content: counter(t, decimal-leading-zero);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+  .doc-toc a:hover, .doc-toc a.active { color: var(--ink); }
+  @media (max-width: 960px) {
+    .doc-toc { position: static; border-left: 0; padding-left: 0; }
+    .doc-toc ol { display: flex; flex-wrap: wrap; gap: 8px; }
+    .doc-toc li { margin: 0; }
+    .doc-toc a { padding: 8px 12px; border: 1px solid var(--rule); border-radius: 999px; }
+  }
+
+  .doc-body { max-width: 720px; }
+  .doc-body section {
+    padding: 64px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .doc-body section:first-child { padding-top: 0; }
+  .doc-body h2 {
+    font-size: clamp(32px, 4vw, 48px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin: 0 0 18px;
+    max-width: 24ch;
+  }
+  .doc-body h2 em { color: var(--forest); font-style: italic; font-weight: 300; }
+  .doc-body h3 {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: -0.005em;
+    line-height: 1.3;
+    margin: 32px 0 12px;
+    color: var(--ink);
+  }
+  .doc-body p { font-size: 16px; line-height: 1.65; color: var(--ink-2); margin: 0 0 16px; max-width: 64ch; }
+  .doc-body p strong { color: var(--ink); font-weight: 500; }
+  .doc-body ul { font-size: 16px; line-height: 1.6; color: var(--ink-2); padding-left: 18px; max-width: 64ch; }
+  .doc-body ul li { margin-bottom: 8px; }
+  .doc-body ul li::marker { color: var(--muted); }
+
+  .pullquote {
+    font-family: var(--font-display);
+    font-size: 28px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    border-left: 3px solid var(--forest);
+    padding: 8px 0 8px 24px;
+    margin: 32px 0;
+    max-width: 32ch;
+    text-wrap: balance;
+  }
+
+  .doc-callout {
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+    margin: 28px 0;
+  }
+  .doc-callout .h {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--forest);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .doc-callout p:last-child { margin-bottom: 0; }
+
+  /* Two-col compare */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin: 28px 0;
+  }
+  @media (max-width: 720px) { .compare { grid-template-columns: 1fr; } }
+  .compare > div {
+    border-top: 1px solid var(--ink);
+    padding-top: 20px;
+  }
+  .compare h4 {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  /* Tagline list */
+  .taglines { list-style: none !important; padding: 0 !important; max-width: none !important; }
+  .taglines li {
+    font-family: var(--font-display);
+    font-size: 28px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+    display: flex;
+    gap: 18px;
+  }
+  .taglines li::before {
+    content: counter(tag, decimal-leading-zero);
+    counter-increment: tag;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--forest);
+    letter-spacing: 0.08em;
+    padding-top: 8px;
+    flex-shrink: 0;
+  }
+  .taglines { counter-reset: tag; }
+  .taglines li em { font-style: italic; color: var(--forest); }
+  .taglines li.recommended { background: var(--paper-2); padding-left: 16px; padding-right: 16px; margin-left: -16px; margin-right: -16px; }
+  .taglines li.recommended::after { content: "RECOMMENDED"; font-family: var(--font-mono); font-size: 10px; color: var(--forest); letter-spacing: 0.1em; padding-top: 12px; margin-left: auto; }
+
+  /* Sitemap diagram */
+  .sitemap {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    margin: 28px 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    overflow-x: auto;
+  }
+  .sitemap pre { margin: 0; color: var(--ink); line-height: 1.7; font-family: inherit; }
+  .sitemap .root { color: var(--forest); font-weight: 500; }
+  .sitemap .com { color: var(--muted); }
+
+  /* Wireframe block */
+  .wireframe {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    background: var(--paper);
+    margin: 28px 0;
+    overflow: hidden;
+  }
+  .wf-row {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-2);
+  }
+  .wf-row:last-child { border-bottom: 0; }
+  .wf-row .h {
+    background: var(--paper-2);
+    padding: 4px 10px;
+    border-radius: 999px;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+  .wf-row .v { color: var(--muted); text-align: right; max-width: 50%; }
+
+  /* Keyword cluster */
+  .kw-cluster {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .kw-card {
+    background: var(--paper-2);
+    border-radius: var(--radius-lg);
+    padding: 18px 20px;
+  }
+  .kw-card h5 {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--forest);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .kw-card .kw-list {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+  @media (max-width: 720px) { .kw-cluster { grid-template-columns: 1fr; } }
+
+  /* Roadmap */
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+    margin: 28px 0;
+  }
+  .roadmap-col {
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 20px;
+  }
+  .roadmap-col .h { font-family: var(--font-mono); font-size: 11px; color: var(--forest); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  .roadmap-col h4 { font-family: var(--font-display); font-weight: 400; font-size: 20px; letter-spacing: -0.01em; margin-bottom: 12px; line-height: 1.15; }
+  .roadmap-col ul { font-size: 13px; padding-left: 16px; margin: 0; }
+  .roadmap-col li { margin-bottom: 6px; }
+  @media (max-width: 800px) { .roadmap { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .roadmap { grid-template-columns: 1fr; } }
+
+  /* Mode toggle */
+  .mode-toggle { position: fixed; bottom: 20px; right: 20px; z-index: 100; background: var(--paper); border: 1px solid var(--ink); border-radius: 999px; padding: 4px; display: inline-flex; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .mode-toggle button { border: 0; background: transparent; color: var(--ink); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; padding: 8px 14px; border-radius: 999px; cursor: pointer; }
+  .mode-toggle button.active { background: var(--ink); color: var(--paper); }
+</style>
+</head>
+<body data-screen-label="strategy-brief">
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand" aria-label="Deer Brook — home"></a>
+    <nav class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="practice.html">Practices</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="strategy.html" class="active">Strategy brief</a>
+    </nav>
+    <a href="contact.html" class="btn btn-primary">Start a conversation</a>
+  </div>
+</header>
+
+<!-- Cover -->
+<section class="cover">
+  <div class="container">
+    <span class="eyebrow">Internal · brand &amp; site strategy · v1.0</span>
+    <h1 style="margin-top: 28px;">Repositioning Deer Brook for the <em>AI era.</em></h1>
+    <p class="lead">A condensed strategic brief covering brand positioning, site architecture, homepage strategy, practice-level positioning, SEO/GEO approach, visual direction, technical build, and the staged roadmap to ship.</p>
+    <div class="cover-meta">
+      <div>Prepared for<div class="v">Deer Brook leadership</div></div>
+      <div>Date<div class="v">May 2026</div></div>
+      <div>Audience<div class="v">Partners · marketing · web</div></div>
+      <div>Status<div class="v">Working draft</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Body -->
+<div class="container">
+  <div class="doc-shell">
+    <aside class="doc-toc">
+      <div class="label">Contents</div>
+      <ol>
+        <li><a href="#s1" class="active">Brand assessment</a></li>
+        <li><a href="#s2">New positioning</a></li>
+        <li><a href="#s3">Site architecture</a></li>
+        <li><a href="#s4">Homepage strategy</a></li>
+        <li><a href="#s5">Practice positioning</a></li>
+        <li><a href="#s6">SEO + GEO</a></li>
+        <li><a href="#s7">Visual + UX</a></li>
+        <li><a href="#s8">Technical build</a></li>
+        <li><a href="#s9">Roadmap</a></li>
+      </ol>
+    </aside>
+
+    <article class="doc-body">
+
+      <!-- SECTION 1 -->
+      <section id="s1">
+        <span class="eyebrow">Section 01</span>
+        <h2 style="margin-top: 16px;">Brand assessment.</h2>
+        <p class="lead muted" style="font-size: 19px;">What's working, what's outdated, and what the firm is becoming.</p>
+
+        <h3>Where we stand</h3>
+        <p>Deer Brook is a credible mid-market technology firm with a strong Microsoft Dynamics practice and quietly capable practices in cybersecurity, higher education, data, and cloud. The market — including its own clients — perceives it as <strong>"a Microsoft shop with extra services."</strong> That perception is the problem.</p>
+
+        <div class="compare">
+          <div>
+            <h4>Strengths</h4>
+            <ul>
+              <li>Eleven years of operator-grade delivery.</li>
+              <li>Real Dynamics depth — F&amp;O, BC, GP migrations.</li>
+              <li>Niche authority in higher education.</li>
+              <li>Senior practitioners; low staff churn.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Weaknesses</h4>
+            <ul>
+              <li>Reads as a VAR / MSP from outside.</li>
+              <li>AI story is absent on the current site.</li>
+              <li>Practice areas presented as separate silos.</li>
+              <li>No clear executive-level narrative for CFO/CIO buyers.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>What is outdated</h3>
+        <p>Current site reads as a 2018 partner page — heavy on Microsoft logos, light on point of view. Lacks any sustained narrative about what Deer Brook actually believes about modern operations. Stock-feeling imagery. Practice areas listed but not differentiated. No published thinking.</p>
+
+        <h3>What is confusing</h3>
+        <p>The relationship between "Deer Brook Consulting" and "Deer Brook Dynamics" is unclear. Visitors can't tell whether AI is a service, a horizontal, or marketing language. The page doesn't make obvious that Deer Brook works outside the Microsoft ecosystem at all.</p>
+
+        <h3>Missed opportunities</h3>
+        <ul>
+          <li><strong>The AI horizontal.</strong> No competitor at this size has staked a clean position on AI as operating philosophy.</li>
+          <li><strong>Higher education.</strong> Deep operating knowledge — currently buried as a sub-bullet.</li>
+          <li><strong>Published thinking.</strong> Field notes from 180+ engagements is an asset; none of it is in market.</li>
+          <li><strong>Vendor-agnostic positioning.</strong> A real differentiator vs. partner-driven competitors.</li>
+        </ul>
+
+        <h3>What Deer Brook should become</h3>
+        <p>A modern, AI-forward technology consulting firm whose Microsoft Dynamics practice is one capability inside a broader operational-transformation platform — and whose published point of view earns the right to be in the consideration set for CFOs, CIOs, and CISOs who are actively skeptical of both VARs and global consultancies.</p>
+      </section>
+
+      <!-- SECTION 2 -->
+      <section id="s2">
+        <span class="eyebrow">Section 02</span>
+        <h2 style="margin-top: 16px;">New positioning.</h2>
+        <p class="lead muted" style="font-size: 19px;">One sentence, then everything else.</p>
+
+        <div class="doc-callout">
+          <div class="h">Positioning statement</div>
+          <p style="font-family: var(--font-display); font-size: 24px; line-height: 1.3; letter-spacing: -0.01em; color: var(--ink); margin-bottom: 12px; max-width: 32ch;">Deer Brook is a modern technology consulting firm helping organizations modernize finance, security, data, higher-education systems, and operations through AI-enabled transformation.</p>
+          <p>AI sits above every practice as a unifying operating philosophy — not below them as a separate service line.</p>
+        </div>
+
+        <h3>Tagline options</h3>
+        <ol class="taglines">
+          <li class="recommended">Operational transformation <em>for the AI era.</em></li>
+          <li>Modernize operations. <em>Native to AI.</em></li>
+          <li>The work above the workflow.</li>
+          <li>Consulting for the systems era.</li>
+          <li>Built where compliance is non-negotiable.</li>
+        </ol>
+
+        <h3>Messaging pillars</h3>
+        <ul>
+          <li><strong>AI as operating philosophy.</strong> AI is delivered <em>through</em> every practice, not next to them.</li>
+          <li><strong>Practitioner-led.</strong> Senior operators on every engagement. No bait-and-switch staffing.</li>
+          <li><strong>Vendor-agnostic, in writing.</strong> No referral fees. The right tool, not the house tool.</li>
+          <li><strong>Built for regulated complexity.</strong> Higher ed, government, nonprofit, mid-market — where the wrong system costs more than no system.</li>
+        </ul>
+
+        <h3>Differentiators against the field</h3>
+        <ul>
+          <li><strong>Vs. global consultancies (Accenture, Deloitte):</strong> Senior practitioners only; fixed-scope, milestone-billed engagements; no inflated benches.</li>
+          <li><strong>Vs. Microsoft-only resellers / VARs:</strong> AI-native delivery patterns; multi-platform; published point of view.</li>
+          <li><strong>Vs. boutique AI shops:</strong> Real depth in ERP, security, and higher-ed verticals; eleven years of audited operating delivery.</li>
+        </ul>
+
+        <h3>"Why Deer Brook"</h3>
+        <p class="pullquote">We don't make slideware. We ship working systems — designed so intelligence is native, not retrofitted.</p>
+      </section>
+
+      <!-- SECTION 3 -->
+      <section id="s3">
+        <span class="eyebrow">Section 03</span>
+        <h2 style="margin-top: 16px;">Site architecture.</h2>
+        <p class="lead muted" style="font-size: 19px;">A sitemap that scales as the practice publishes.</p>
+
+        <h3>Top navigation</h3>
+        <p><strong>Home</strong> · <strong>Practices</strong> · <strong>Industries</strong> · <strong>Insights</strong> · <strong>About</strong> · <strong>Contact</strong>. Five primary items plus the CTA. Practices and Industries are mega-menu hover panels exposing the children directly so users skip the index pages.</p>
+
+        <h3>Information architecture</h3>
+        <div class="sitemap">
+<pre><span class="root">/</span>                                <span class="com"># Home — AI-forward positioning</span>
+├── <span class="root">practices/</span>
+│   ├── ai-automation/             <span class="com"># Flagship — three engagement types</span>
+│   ├── erp-business-applications/
+│   │   ├── dynamics-365/          <span class="com"># Strong SEO target</span>
+│   │   ├── netsuite/
+│   │   └── workday/
+│   ├── cybersecurity/
+│   │   ├── crowdstrike/
+│   │   ├── tenable/
+│   │   └── ai-soc/
+│   ├── higher-education/
+│   │   ├── anthology/
+│   │   ├── student-data/
+│   │   └── ai-policy-higher-ed/   <span class="com"># GEO target</span>
+│   ├── data-analytics/
+│   ├── cloud-infrastructure/
+│   └── advisory/
+├── <span class="root">industries/</span>
+│   ├── higher-education/
+│   ├── nonprofit-foundations/
+│   ├── government/
+│   ├── mid-market/
+│   ├── healthcare/
+│   └── manufacturing/
+├── <span class="root">insights/</span>
+│   ├── field-notes/               <span class="com"># Weekly cadence</span>
+│   ├── playbooks/                 <span class="com"># Open templates</span>
+│   ├── faq/                       <span class="com"># GEO answer hub</span>
+│   └── the-brook/                 <span class="com"># Newsletter</span>
+├── <span class="root">about/</span>
+│   ├── people/
+│   ├── careers/
+│   └── press/
+└── <span class="root">contact/</span></pre>
+        </div>
+
+        <h3>Practice page pattern (one template, eight instances)</h3>
+        <p>Every practice page follows the same structure so the architecture scales: <strong>hero · three engagement offers · process · case · stack · FAQ · related practices · CTA.</strong> Tightly templated. The discipline lets the team publish a new sub-practice in a day.</p>
+
+        <h3>Industry pages</h3>
+        <p>Cross-cut the practices. A Higher Education industry page pulls SIS work from Higher-Ed Practice, student-data from Data &amp; Analytics, GLBA from Cybersecurity, and AI policy from AI &amp; Automation — proof that practices compose.</p>
+
+        <h3>Conversion strategy</h3>
+        <ul>
+          <li>Single canonical CTA: <strong>"Send us a paragraph."</strong> Routes to a partner. Two-day reply commitment.</li>
+          <li>Secondary CTA on practice pages: <strong>"Scope a starting engagement."</strong></li>
+          <li>Newsletter (The Brook) is the long-tail conversion. Captures CIO/CFO leads on read-only intent.</li>
+        </ul>
+      </section>
+
+      <!-- SECTION 4 -->
+      <section id="s4">
+        <span class="eyebrow">Section 04</span>
+        <h2 style="margin-top: 16px;">Homepage strategy.</h2>
+        <p class="lead muted" style="font-size: 19px;">A homepage that does three things: positions, proves, and converts.</p>
+
+        <h3>Hero options (recommended in bold)</h3>
+        <ol class="taglines">
+          <li class="recommended">Operational transformation <em>for the AI era.</em></li>
+          <li>Modernize operations. AI-native by design.</li>
+          <li>Where strategy meets systems. Intelligence sits inside the work.</li>
+          <li>The consulting firm built for how real work gets done.</li>
+        </ol>
+
+        <h3>Recommended sections (in order)</h3>
+        <div class="wireframe">
+          <div class="wf-row"><span class="h">01 Hero</span><span class="v">Positioning + dual CTA + stat strip</span></div>
+          <div class="wf-row"><span class="h">02 Trust</span><span class="v">Partner row — Microsoft, CrowdStrike, Tenable, Anthology, AWS, Anthropic</span></div>
+          <div class="wf-row"><span class="h">03 AI ethos</span><span class="v">Four pillars · "AI is not a service line"</span></div>
+          <div class="wf-row"><span class="h">04 Ask</span><span class="v">Interactive routing assistant — describe problem, route to practice</span></div>
+          <div class="wf-row"><span class="h">05 Practices</span><span class="v">8-cell grid · senior practitioner per cell</span></div>
+          <div class="wf-row"><span class="h">06 Industries</span><span class="v">Vertical list · counts · sticky aside narrative</span></div>
+          <div class="wf-row"><span class="h">07 Stack</span><span class="v">12-cell technology grid · partner status</span></div>
+          <div class="wf-row"><span class="h">08 Spotlight</span><span class="v">One client case · two real metrics · quote</span></div>
+          <div class="wf-row"><span class="h">09 Insights</span><span class="v">Three field notes · subscribe CTA</span></div>
+          <div class="wf-row"><span class="h">10 CTA</span><span class="v">"Bring us a real problem" · partner reply commitment</span></div>
+        </div>
+
+        <h3>Storytelling shape</h3>
+        <p><strong>Hook → ethos → proof → call.</strong> The page introduces a point of view (AI as operating philosophy), demonstrates capability (practices, technology, case), and ends on a low-friction conversation invite. The "ask our routing assistant" moment is the AI-native trust signal — proof that the firm uses what it sells.</p>
+      </section>
+
+      <!-- SECTION 5 -->
+      <section id="s5">
+        <span class="eyebrow">Section 05</span>
+        <h2 style="margin-top: 16px;">Practice positioning.</h2>
+        <p class="lead muted" style="font-size: 19px;">Four practices. Same positioning frame.</p>
+
+        <h3>Frame applied to each practice</h3>
+        <ul>
+          <li><strong>One-line positioning</strong> · what this practice exists to do.</li>
+          <li><strong>Three engagement offers</strong> · readiness sprint, embedded build, ongoing partner.</li>
+          <li><strong>Process · 4 steps</strong> · how we engage.</li>
+          <li><strong>One real case</strong> · 14 weeks, two metrics, a quote.</li>
+          <li><strong>Stack we work in</strong> · 4 columns.</li>
+          <li><strong>FAQ · 6 items</strong> · the questions clients actually ask.</li>
+          <li><strong>Related practices</strong> · what this practice composes with.</li>
+        </ul>
+
+        <h3>Practice-specific positioning lines</h3>
+        <ul>
+          <li><strong>AI &amp; Automation</strong> — "Intelligence that lives inside the work."</li>
+          <li><strong>ERP &amp; Business Applications</strong> — "Finance and operations platforms, modernized."</li>
+          <li><strong>Microsoft Dynamics</strong> — "F&amp;O, BC, and GP migration from a certified Solutions Partner."</li>
+          <li><strong>Cybersecurity</strong> — "Real risk reduction, audited and ongoing."</li>
+          <li><strong>Higher Education</strong> — "Built by people who've worked in the seat."</li>
+          <li><strong>Data &amp; Analytics</strong> — "Reports executives actually open."</li>
+          <li><strong>Cloud &amp; Infrastructure</strong> — "Platforms that let everything else run."</li>
+          <li><strong>Advisory Services</strong> — "Second opinions, in writing."</li>
+        </ul>
+
+        <h3>Microsoft Dynamics positioning note</h3>
+        <p>Dynamics keeps its dedicated SEO real estate and partner badge. It lives <strong>under</strong> ERP &amp; Business Applications in the IA but receives its own URL (<span class="mono">/practices/erp-business-applications/dynamics-365/</span>) and stand-alone landing page optimized for "Dynamics 365 consulting partner," "GP to Business Central migration," "D365 F&amp;O implementation." The Dynamics story is told inside the broader operational-transformation narrative — never the other way around.</p>
+      </section>
+
+      <!-- SECTION 6 -->
+      <section id="s6">
+        <span class="eyebrow">Section 06</span>
+        <h2 style="margin-top: 16px;">SEO + GEO strategy.</h2>
+        <p class="lead muted" style="font-size: 19px;">Optimize for traditional search and for being cited by ChatGPT, Claude, and Google AI Overviews.</p>
+
+        <h3>Architecture principles</h3>
+        <ul>
+          <li><strong>Topic clusters, not orphan pages.</strong> Each practice page is a hub; sub-practices and field notes link inward.</li>
+          <li><strong>Answer-style copy.</strong> Headings phrased as questions where natural. Direct, single-sentence answers in the first paragraph.</li>
+          <li><strong>Structured data everywhere.</strong> Service, FAQ, Article, Person, and Organization schema on every applicable page.</li>
+          <li><strong>Canonical FAQ hub.</strong> Aggregated answer page that AI search engines cite preferentially.</li>
+        </ul>
+
+        <h3>Semantic keyword clusters</h3>
+        <div class="kw-cluster">
+          <div class="kw-card">
+            <h5>AI &amp; Automation</h5>
+            <div class="kw-list">enterprise AI consulting · agentic workflows · AI governance for finance · mid-market AI implementation · AI usage policy template · fractional CAIO</div>
+          </div>
+          <div class="kw-card">
+            <h5>Microsoft Dynamics</h5>
+            <div class="kw-list">Dynamics 365 consulting partner · D365 F&amp;O implementation · Business Central migration · Dynamics GP end-of-life · Power Platform consulting</div>
+          </div>
+          <div class="kw-card">
+            <h5>Higher Education</h5>
+            <div class="kw-list">higher ed AI policy · Anthology implementation · student data warehouse · GLBA compliance higher ed · SIS integration consulting</div>
+          </div>
+          <div class="kw-card">
+            <h5>Cybersecurity</h5>
+            <div class="kw-list">CrowdStrike implementation partner · Tenable vulnerability management · AI SOC operations · identity hardening consulting · Microsoft Defender XDR</div>
+          </div>
+        </div>
+
+        <h3>GEO (Generative Engine Optimization)</h3>
+        <p>AI search engines (ChatGPT search, Claude, Perplexity, Google AI Overviews) cite sources that are <strong>concise, declarative, structured, and authoritative.</strong> Tactics:</p>
+        <ul>
+          <li><strong>Lead with the answer.</strong> First sentence under every H2 is the answer to the heading.</li>
+          <li><strong>Numbered, bounded lists.</strong> "In 9 pages." "Four milestones." "Three engagement types." LLMs cite enumerable content.</li>
+          <li><strong>Named-author bylines.</strong> Every field note signed by a partner with bio schema. Authority is a person, not a brand.</li>
+          <li><strong>FAQ hub at <span class="mono">/insights/faq/</span></strong> with one canonical answer per common question — what AI search engines actually retrieve.</li>
+          <li><strong>Templates and playbooks open and indexable.</strong> The "AI policy in 9 pages" becomes the citation target for every "how to write an AI policy" query.</li>
+        </ul>
+
+        <h3>Authority building</h3>
+        <ul>
+          <li>The Brook · weekly newsletter · 1,000 net-new CIO/CFO subscribers per quarter.</li>
+          <li>Field notes · two per practice per quarter; partners author.</li>
+          <li>Open playbooks · AI policy template, IT due-diligence checklist, ERP-modernization runbook.</li>
+          <li>Selective speaking · 8 events per year, partner-led, vertical-focused (EDUCAUSE, NACUBO, etc.).</li>
+        </ul>
+      </section>
+
+      <!-- SECTION 7 -->
+      <section id="s7">
+        <span class="eyebrow">Section 07</span>
+        <h2 style="margin-top: 16px;">Visual + UX direction.</h2>
+        <p class="lead muted" style="font-size: 19px;">An editorial system that signals "operator-grade, modern, AI-native" without leaning on AI imagery.</p>
+
+        <h3>Visual identity direction</h3>
+        <p><strong>Editorial · executive · operator-grade.</strong> Closer to a serious financial publication than to a SaaS marketing site. Generous whitespace. Restrained color. Typography is the primary identity element.</p>
+
+        <h3>Typography</h3>
+        <ul>
+          <li><strong>Display:</strong> Source Serif 4 — modern serif with editorial credibility. Used for h1–h3 and pull quotes.</li>
+          <li><strong>Body:</strong> Geist Sans — clean geometric sans, optimized for reading. Used for body, UI, navigation.</li>
+          <li><strong>System:</strong> Geist Mono — used for labels, metadata, system status. Signals "we know infrastructure."</li>
+        </ul>
+
+        <h3>Color palette</h3>
+        <ul>
+          <li><strong>Paper:</strong> #F4F1EA — warm off-white. Background.</li>
+          <li><strong>Ink:</strong> #1A1A18 — warm ink black. Primary type.</li>
+          <li><strong>Forest:</strong> #2E4A3A — a deep, dignified green. Brand accent. (Nods to "Deer Brook" without being literal.)</li>
+          <li><strong>Sienna:</strong> #B5532A — emergency accent only. Used sparingly.</li>
+          <li><strong>Bold-mode inversion:</strong> #0E100D ground with #C5F26A electric lime — used for the campaign-feeling alternate, AI-narrative microsites, and event takeovers.</li>
+        </ul>
+
+        <h3>Motion principles</h3>
+        <ul>
+          <li>Reveal on scroll (subtle, single-axis). No parallax.</li>
+          <li>Slow ticker for system status, marquee for practice listing (bold mode only).</li>
+          <li>Cursor follows: no. Magnetic buttons: no. Whatever feels like a marketing site: no.</li>
+        </ul>
+
+        <h3>Imagery direction</h3>
+        <p>No stock photography. No abstract AI gradient art. Two image styles only:</p>
+        <ul>
+          <li><strong>Documentary photography</strong> — actual working sessions, partner portraits, on-site delivery moments. Commissioned, B&amp;W or warm-toned.</li>
+          <li><strong>Striped placeholders + monospace labels</strong> — until real photography is shot, every image slot is a textured striped placeholder labelled in monospace. The placeholder itself is part of the brand language.</li>
+        </ul>
+
+        <h3>Reference companies</h3>
+        <p>Aesthetic adjacents (not clones): Anthropic, Linear, McKinsey Quarterly, the New York Times opinion section, Stripe, Workday's executive site, the Financial Times. <strong>Tonally:</strong> Anthropic's confidence + McKinsey's gravity + a small operator-tools shop's directness.</p>
+      </section>
+
+      <!-- SECTION 8 -->
+      <section id="s8">
+        <span class="eyebrow">Section 08</span>
+        <h2 style="margin-top: 16px;">Technical build.</h2>
+        <p class="lead muted" style="font-size: 19px;">Built for SEO, GEO, and content velocity.</p>
+
+        <h3>Stack recommendation</h3>
+        <p><strong>Next.js + Sanity</strong> — primary recommendation. Next.js for performance, MDX-rich field notes, and structured-data control. Sanity for partner-authored content with low friction. Hosted on Vercel.</p>
+        <p><em>Alternative:</em> Webflow if the marketing team must be able to edit without dev support. Acceptable for first 18 months; revisit at scale.</p>
+
+        <div class="doc-callout">
+          <div class="h">Why not WordPress</div>
+          <p>WordPress is fine. It is not differentiating, and it caps the marketing team's velocity on structured data and component reuse. The cost of moving off it in three years is higher than the cost of starting on Next.js + Sanity now.</p>
+        </div>
+
+        <h3>SEO stack</h3>
+        <ul>
+          <li>Server-rendered routes, single canonical URL per page.</li>
+          <li>JSON-LD schema injection per template (Service, FAQ, Article, Person, Organization).</li>
+          <li>Sitemap auto-generation, Robots tuned for AI crawlers (allow GPTBot, ClaudeBot, Google-Extended).</li>
+          <li>Ahrefs or Semrush for content gap analysis; Search Console + Bing Webmaster baseline.</li>
+        </ul>
+
+        <h3>Analytics &amp; routing</h3>
+        <ul>
+          <li>Plausible (privacy-friendly default) + GA4 (legacy obligations).</li>
+          <li>HubSpot for lead capture and routing (CRM already in use).</li>
+          <li>Form posts route to partners by practice tag; two-day SLA tracked in CRM.</li>
+        </ul>
+
+        <h3>GEO architecture</h3>
+        <ul>
+          <li>FAQ hub at <span class="mono">/insights/faq/</span> with canonical Q→A pairing per page.</li>
+          <li>Per-page <span class="mono">llms.txt</span> manifests (an emerging convention) summarizing the page for LLM crawlers.</li>
+          <li>Partner author pages with full bio schema and external citations (LinkedIn, prior writing, conference talks).</li>
+          <li>Open templates and playbooks served as canonical, indexable pages — not gated PDFs.</li>
+        </ul>
+      </section>
+
+      <!-- SECTION 9 -->
+      <section id="s9">
+        <span class="eyebrow">Section 09</span>
+        <h2 style="margin-top: 16px;">Implementation roadmap.</h2>
+        <p class="lead muted" style="font-size: 19px;">Phased so the firm is visibly different in 60 days and meaningfully repositioned in 12 months.</p>
+
+        <div class="roadmap">
+          <div class="roadmap-col">
+            <div class="h">Phase 01 · 0–60 days</div>
+            <h4>Quick wins.</h4>
+            <ul>
+              <li>Ship new homepage (editorial direction).</li>
+              <li>Ship Practices index + AI &amp; Automation page.</li>
+              <li>About + Contact + reply commitment.</li>
+              <li>Launch The Brook newsletter (week 4).</li>
+              <li>Tagline + positioning in market.</li>
+            </ul>
+          </div>
+          <div class="roadmap-col">
+            <div class="h">Phase 02 · 60–120 days</div>
+            <h4>Practice depth.</h4>
+            <ul>
+              <li>Six remaining practice pages live.</li>
+              <li>Industry pages (5).</li>
+              <li>FAQ hub seeded with 40 entries.</li>
+              <li>First four field notes published.</li>
+              <li>Schema + GEO architecture in place.</li>
+            </ul>
+          </div>
+          <div class="roadmap-col">
+            <div class="h">Phase 03 · 120–240 days</div>
+            <h4>Content velocity.</h4>
+            <ul>
+              <li>Weekly field notes cadence.</li>
+              <li>Open playbooks published (3).</li>
+              <li>Documentary photography shot.</li>
+              <li>Partner author pages + LinkedIn alignment.</li>
+              <li>First conference talks placed.</li>
+            </ul>
+          </div>
+          <div class="roadmap-col">
+            <div class="h">Phase 04 · 240–365 days</div>
+            <h4>Authority compounding.</h4>
+            <ul>
+              <li>20+ field notes, 8 playbooks.</li>
+              <li>Newsletter at 5,000 subscribers.</li>
+              <li>Cited by AI search engines on target queries.</li>
+              <li>Inbound at &gt; 60% of qualified leads.</li>
+              <li>Phase plan for international + new verticals.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Lead-generation roadmap</h3>
+        <ul>
+          <li><strong>Direct response:</strong> "Send us a paragraph" is the canonical CTA. Two-day reply SLA tracked.</li>
+          <li><strong>Newsletter:</strong> The Brook — primary long-tail capture. CIO/CFO segmentation from sign-up.</li>
+          <li><strong>Open playbooks:</strong> AI policy, IT due diligence, ERP modernization. Each indexed and citable.</li>
+          <li><strong>Selective events:</strong> Eight per year, partner-led, vertical-focused.</li>
+          <li><strong>Referral discipline:</strong> No vendor referral fees accepted. No outbound paid acquisition for first 12 months.</li>
+        </ul>
+
+        <h3>Success metrics</h3>
+        <ul>
+          <li>Inbound qualified leads quarterly · target 30 by Q4.</li>
+          <li>Newsletter subscribers · 5,000 by month 12.</li>
+          <li>AI-citation rate on target queries · 25% by month 12 (manual audit).</li>
+          <li>Organic search · top-3 for "Dynamics 365 consulting partner [region]" by month 9.</li>
+          <li>Average deal velocity from inbound · &lt; 45 days first touch to engagement signed.</li>
+        </ul>
+      </section>
+
+      <!-- Sign off -->
+      <section style="border-bottom: 0;">
+        <span class="eyebrow">Sign-off</span>
+        <p style="margin-top: 24px; font-family: var(--font-display); font-size: 22px; line-height: 1.4; letter-spacing: -0.005em; color: var(--ink);">This brief is the working document, not the final word. Iteration belongs in the prototype — the homepage and practice pages — alongside the partners running the practices. Comments routed to <span class="mono">strategy@deer-brook.com</span>.</p>
+      </section>
+
+    </article>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-meta">
+      <div class="footer-brand">
+        <a href="index.html" class="brand" aria-label="Deer Brook — home"></a>
+        <p class="muted" style="font-size: 14px; max-width: 36ch; margin-top: 16px;">Innovative, effective, sustainable. Modern technology consulting helping organizations modernize through partnerships, not transactions.</p>
+        <p class="mono" style="margin-top: 18px;">49 Pineland Drive<br />New Gloucester, ME 04260</p>
+        <p class="mono" style="margin-top: 6px;"><a href="tel:+12073870396" style="border-bottom: 1px solid var(--rule);">1-207-387-0396</a></p>
+        <div style="display: flex; gap: 14px; margin-top: 18px;" class="mono">
+          <a href="https://www.linkedin.com/company/deerbrookcyber" target="_blank" rel="noopener" style="border-bottom: 1px solid var(--rule);">LinkedIn</a>
+          <a href="https://www.facebook.com/deerbrookcyber" target="_blank" rel="noopener" style="border-bottom: 1px solid var(--rule);">Facebook</a>
+          <a href="https://www.youtube.com/@deerbrookcyber" target="_blank" rel="noopener" style="border-bottom: 1px solid var(--rule);">YouTube</a>
+        </div>
+      </div>
+      <div class="footer-actions">
+        <h6>Company</h6>
+        <ul>
+          <li><a href="about.html">Who are we?</a></li>
+          <li><a href="about.html#careers">Careers</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="strategy.html">Brand &amp; strategy</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+        <h6 style="margin-top: 22px;">Insights</h6>
+        <ul>
+          <li><a href="#">Field notes</a></li>
+          <li><a href="#">Moving Forward podcast</a></li>
+          <li><a href="#">Resources &amp; articles</a></li>
+        </ul>
+      </div>
+      <div class="footer-newsletter" id="brook-signup">
+        <span class="eyebrow">Weekly · The Brook</span>
+        <h5>Field notes for CIOs &amp; CFOs.</h5>
+        <p>Practical, technical, vendor-free. One short briefing on what we're learning across engagements — sent Sundays.</p>
+        <form onsubmit="event.preventDefault(); this.closest('.footer-newsletter').classList.add('subscribed'); this.querySelector('button').textContent='Subscribed \u2713';">
+          <input type="email" required placeholder="you@company.com" aria-label="Email address" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="meta">One email a week · unsubscribe in one click</div>
+      </div>
+    </div>
+
+    <div class="footer-services six">
+      <div class="footer-svc">
+        <h6><a href="practice.html">AI &amp; Automation →</a></h6>
+        <ul>
+          <li><a href="practice.html">AI Readiness Sprint</a></li>
+          <li><a href="practice.html">Embedded AI Build</a></li>
+          <li><a href="practice.html">AI Operating Partner</a></li>
+          <li><a href="practice.html">AI Policy &amp; Governance</a></li>
+          <li><a href="practice.html">Agentic workflows</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-higher-ed.html">Higher Education →</a></h6>
+        <ul>
+          <li><a href="practice-higher-ed.html">Transformation Services</a></li>
+          <li><a href="practice-higher-ed.html">Organizational Development</a></li>
+          <li><a href="practice-higher-ed.html">System Implementation</a></li>
+          <li><a href="practice-higher-ed.html">SIS · CRM · LMS</a></li>
+          <li><a href="practice-higher-ed.html">Moving Forward with Anthology</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-dynamics.html">Deer Brook Dynamics →</a></h6>
+        <ul>
+          <li><a href="practice-dynamics.html">ERP Modernization &amp; Cloud</a></li>
+          <li><a href="practice-dynamics.html">D365 Business Central</a></li>
+          <li><a href="practice-dynamics.html">D365 Finance &amp; Ops</a></li>
+          <li><a href="practice-dynamics.html">CRM Modernization</a></li>
+          <li><a href="practice-dynamics.html">Copilot &amp; Power Platform</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-cyber.html">Cyber Advisory →</a></h6>
+        <ul>
+          <li><a href="practice-cyber.html">vCISO Services</a></li>
+          <li><a href="practice-cyber.html">CMMC Services</a></li>
+          <li><a href="practice-cyber.html">HIPAA Security Risk Assessments</a></li>
+          <li><a href="practice-cyber.html">Governance · Risk · Compliance</a></li>
+          <li><a href="practice-cyber.html">Policy &amp; board reporting</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-technical.html">Technical Services →</a></h6>
+        <ul>
+          <li><a href="practice-technical.html">Threat &amp; Vulnerability Mgmt</a></li>
+          <li><a href="practice-technical.html">External Network Assessments</a></li>
+          <li><a href="practice-technical.html">Internal Network Assessments</a></li>
+          <li><a href="practice-technical.html">Cloud Security Assessments</a></li>
+          <li><a href="practice-technical.html">Web / API Security Assessments</a></li>
+        </ul>
+      </div>
+      <div class="footer-svc">
+        <h6><a href="practice-data.html">Data &amp; Analytics →</a></h6>
+        <ul>
+          <li><a href="practice-data.html">Microsoft Fabric &amp; Power BI</a></li>
+          <li><a href="practice-data.html">Data warehouse modernization</a></li>
+          <li><a href="practice-data.html">Semantic layer &amp; governance</a></li>
+          <li><a href="practice-data.html">Governed AI access</a></li>
+          <li><a href="practice-data.html">Executive reporting</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-legal">
+      <span>© 2026 Deer Brook Consulting LLC · All rights reserved</span>
+      <span>Privacy · Terms · Accessibility</span>
+    </div>
+  </div>
+</footer>
+
+<script src="brand.js"></script>
+<script>
+  // TOC active state
+  const sections = document.querySelectorAll('.doc-body section[id]');
+  const tocLinks = document.querySelectorAll('.doc-toc a');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px' });
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
